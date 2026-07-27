@@ -77,6 +77,7 @@ def main(args):
         ot_max_iter=args.ot_max_iter,
         ot_tolerance=args.ot_tolerance,
         ot_prior_mix=args.ot_prior_mix,
+        svpr_kappa=args.svpr_kappa,
     )
     elapsed = time.perf_counter() - start
 
@@ -115,6 +116,7 @@ def main(args):
         "ot_max_iter": args.ot_max_iter,
         "ot_tolerance": args.ot_tolerance,
         "ot_prior_mix": args.ot_prior_mix,
+        "svpr_kappa": args.svpr_kappa,
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
@@ -147,6 +149,8 @@ def main(args):
         "ot_classes_ess_below_3": None,
         "ot_min_top1_count": None,
         "ot_classes_without_top1": None,
+        "svpr_mean_weight_entropy": None,
+        "svpr_max_weight_range": None,
         **output.diagnostics,
     }
     prediction_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -166,7 +170,7 @@ if __name__ == "__main__":
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
         "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa",
-        "satpa_agreement", "adaptive_satpa", "iterative_satpa", "spt_sa"
+        "satpa_agreement", "adaptive_satpa", "iterative_satpa", "spt_sa", "satpa_svpr"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)
@@ -191,4 +195,5 @@ if __name__ == "__main__":
     parser.add_argument("--ot-max-iter", type=int, default=200)
     parser.add_argument("--ot-tolerance", type=float, default=1e-7)
     parser.add_argument("--ot-prior-mix", type=float, default=0.5)
+    parser.add_argument("--svpr-kappa", type=float, default=0.0)
     main(parser.parse_args())

@@ -302,6 +302,52 @@ def target_prototypes(
     return normalize(np.stack(prototypes)), diagnostics
 
 
+def compute_svpr_weights(
+    source_features: np.ndarray,
+    source_labels: np.ndarray,
+    text_per_prompt: np.ndarray,
+    kappa: float,
+) -> np.ndarray:
+    """Compute source-validated prompt weights with shape (classes, prompts).
+
+    Each logit is kappa times the mean cosine affinity between the source
+    features of a class and one of that class's text templates. Kappa zero
+    yields the uniform Prompt Ensemble.
+    """
+    if kappa < 0:
+        raise ValueError("SVPR kappa must be nonnegative")
+    class_count, template_count, dim = text_per_prompt.shape
+    source_norm = normalize(source_features)
+    text_pp_norm = normalize(text_per_prompt.reshape(-1, dim)).reshape(class_count, template_count, dim)
+    weights = np.zeros((class_count, template_count), dtype=np.float32)
+    for c in range(class_count):
+        mask = source_labels == c
+        if not mask.any():
+            weights[c] = 1.0 / template_count
+            continue
+        similarities = source_norm[mask] @ text_pp_norm[c].T  # (|S_c|, M)
+        mean_sim = similarities.mean(axis=0)  # (M,)
+        if kappa == 0.0:
+            weights[c] = 1.0 / template_count
+        else:
+            scaled = kappa * mean_sim.astype(np.float64)
+            scaled -= scaled.max()
+            exp_scores = np.exp(scaled)
+            weights[c] = (exp_scores / exp_scores.sum()).astype(np.float32)
+    return weights
+
+
+def svpr_text_prototypes(
+    text_per_prompt: np.ndarray,
+    weights: np.ndarray,
+) -> np.ndarray:
+    """Construct the normalized weighted sum of prompt features per class."""
+    class_count, template_count, dim = text_per_prompt.shape
+    text_pp_norm = normalize(text_per_prompt.reshape(-1, dim)).reshape(class_count, template_count, dim)
+    weighted = (weights[:, :, None] * text_pp_norm).sum(axis=1)  # (C, D)
+    return normalize(weighted)
+
+
 @dataclass(frozen=True)
 class MethodOutput:
     probabilities: np.ndarray
@@ -334,6 +380,7 @@ def run_method(
     ot_max_iter: int = 200,
     ot_tolerance: float = 1e-7,
     ot_prior_mix: float = 0.5,
+    svpr_kappa: float = 0.0,
 ) -> MethodOutput:
     text_ensemble = normalize(text_ensemble)
     source = source_prototypes(source_features, source_labels, text_ensemble)
@@ -465,6 +512,35 @@ def run_method(
             (1.0 - alpha_source - alpha_target) * text_ensemble
             + alpha_source * source
             + alpha_target * target
+        )
+    elif method == "satpa_svpr":
+        svpr_weights = compute_svpr_weights(
+            source_features, source_labels, text_per_prompt, svpr_kappa
+        )
+        text_ensemble_svpr = svpr_text_prototypes(text_per_prompt, svpr_weights)
+        source = source_prototypes(source_features, source_labels, text_ensemble_svpr)
+        base = normalize((1.0 - alpha_source) * text_ensemble_svpr + alpha_source * source)
+        base_probabilities = classify(target_features, base)
+        target, diagnostics = target_prototypes(
+            target_features,
+            base_probabilities,
+            base,
+            confidence_threshold,
+            top_k,
+            class_prior_strength,
+            use_uncertainty=True,
+        )
+        prototypes = normalize(
+            (1.0 - alpha_source - alpha_target) * text_ensemble_svpr
+            + alpha_source * source
+            + alpha_target * target
+        )
+        diagnostics["svpr_kappa"] = float(svpr_kappa)
+        diagnostics["svpr_mean_weight_entropy"] = float(
+            -(svpr_weights * np.log(np.clip(svpr_weights, 1e-12, 1.0))).sum(axis=1).mean()
+        )
+        diagnostics["svpr_max_weight_range"] = float(
+            (svpr_weights.max(axis=1) - svpr_weights.min(axis=1)).max()
         )
     else:
         raise ValueError(f"Unknown method: {method}")

@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.methods import classify, normalize, run_method, sinkhorn_transport
+from src.methods import classify, compute_svpr_weights, normalize, run_method, sinkhorn_transport
 
 
 class MethodTests(unittest.TestCase):
@@ -79,6 +79,23 @@ class MethodTests(unittest.TestCase):
         self.assertGreater(output.diagnostics["ot_min_effective_size"], 0.0)
         self.assertGreaterEqual(output.diagnostics["ot_classes_ess_below_3"], 0)
         self.assertLessEqual(output.diagnostics["ot_classes_ess_below_3"], 3)
+
+    def test_svpr_zero_kappa_reproduces_satpa(self):
+        baseline = run_method("satpa", self.source, self.labels, self.target, self.text, self.per_prompt)
+        candidate = run_method(
+            "satpa_svpr", self.source, self.labels, self.target, self.text, self.per_prompt,
+            svpr_kappa=0.0,
+        )
+        np.testing.assert_allclose(candidate.probabilities, baseline.probabilities, atol=1e-7)
+
+    def test_svpr_weights_are_valid(self):
+        prompts = self.per_prompt.copy()
+        prompts[:, 1, :] = normalize(prompts[:, 1, :] + 0.05)
+        weights = compute_svpr_weights(self.source, self.labels, prompts, kappa=10.0)
+        self.assertEqual(weights.shape, (3, 2))
+        self.assertTrue(np.isfinite(weights).all())
+        self.assertTrue((weights >= 0).all())
+        np.testing.assert_allclose(weights.sum(1), 1.0, atol=1e-7)
 
 
 
