@@ -65,3 +65,11 @@ P0 selected fixed source weight 0.10 and fixed target weight 0.10. The selected 
 - Roll back a proposed round when mean maximum probability decreases.
 - If round two does not improve A2W accuracy over round one, iterative updating is stopped and not expanded.
 - If round two improves but round three degrades, select two rounds. No iteration parameter is selected using W2D or Office-Home.
+
+## Locked outcome
+
+- Class-adaptive source/target fusion was rejected.
+- Iteration was rejected because rounds 1, 2, and 3 produced identical A2W accuracy.
+- The promoted variant is `satpa_agreement` with globally fixed source and target weights of 0.10, margin 0.05, and one update round.
+- Across all six Office-31 tasks it improved original SA-TPA from 84.025% to 84.800%, with six improvements and no ties or losses.
+- Any subsequent Office-Home run is a secondary locked extension, not a fresh confirmatory experiment for the overall research project.

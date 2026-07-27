@@ -1,0 +1,21 @@
+{
+  "method": "Agreement-filtered SA-TPA",
+  "implementation_name": "satpa_agreement",
+  "backbone": "ViT-B-32",
+  "weights": "openai",
+  "prompt_count": 4,
+  "alpha_source": 0.1,
+  "alpha_target": 0.1,
+  "agreement_margin": 0.05,
+  "target_update_steps": 1,
+  "pseudo_label_rule": "text_prediction_equals_source_prototype_prediction",
+  "sample_weight_rule": "max(0, consensus_margin - agreement_margin)",
+  "office31_development_tasks": ["A2W", "W2A", "D2W"],
+  "office31_held_out_task": "W2D",
+  "office31_post_lock_tasks": ["A2D", "D2A"],
+  "officehome_role": "secondary_locked_extension",
+  "officehome_used_for_selection": false,
+  "adaptive_class_weights_promoted": false,
+  "iterative_updates_promoted": false,
+  "implementation_git_commit": "3ba3eb7b8223b178facd95ce00259407fbd961c3"
+}
