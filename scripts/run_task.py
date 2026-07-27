@@ -91,6 +91,10 @@ def main(args):
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
+        "accepted_samples": None,
+        "acceptance_rate": None,
+        "mean_uncertainty_weight": None,
+        "classes_with_target_support": None,
         **output.diagnostics,
     }
     prediction_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -120,4 +124,3 @@ if __name__ == "__main__":
     parser.add_argument("--top-k", type=int, default=1)
     parser.add_argument("--class-prior-strength", type=float, default=0.1)
     main(parser.parse_args())
-
