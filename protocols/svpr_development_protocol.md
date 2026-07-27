@@ -28,7 +28,10 @@ No target label, gradient update, trainable neural parameter, additional prompt,
 - Advance only if the selected configuration improves the three-task SA-TPA mean by at least 0.4 percentage points and no development task drops by more than 0.2 percentage points.
 - If the gate fails, retain original SA-TPA and do not search additional prompt-weight formulas or values.
 
+## Target-label qualification
+
+Predictions for every predeclared configuration are saved before target labels are loaded. Nevertheless, comparing their Office-31 target accuracies constitutes development comparison under the strict target-label policy. Therefore this experiment is diagnostic rather than confirmatory. A failed candidate cannot alter the final method; a passing candidate would have required a separately approved source-only selection rule before promotion.
+
 ## Protocol deviation record
 
 An initial script evaluated all six Office-31 tasks before enforcing the sequential gate. Those outputs are retained under `D:/456/results/svpr/office31_sweep.csv` for auditability but are excluded from parameter selection and from any held-out claim. The corrected, idempotent development result is `D:/456/results/svpr/office31_development_gate.csv`.
-

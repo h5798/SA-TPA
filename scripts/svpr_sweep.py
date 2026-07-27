@@ -101,7 +101,10 @@ def run_one(task: str, source_name: str, target_name: str, kappa: float) -> dict
         "prediction_output": str(prediction_path.resolve()),
         "git_commit": git_commit(),
         "runtime_seconds": elapsed,
-        "target_labels_used_for_adaptation_or_selection": False,
+        "target_labels_used_for_adaptation": False,
+        "target_labels_used_for_development_comparison": True,
+        "target_labels_used_for_adaptation_or_selection": True,
+        "target_labels_used_only_for_final_reporting": False,
         "target_labels_loaded_after_prediction_artifact": True,
         **output.diagnostics,
     }
@@ -194,8 +197,10 @@ def main() -> None:
         },
         "evaluations": evaluations,
         "best_kappa": best_kappa,
+        "best_kappa_role": "descriptive development maximum; not promoted",
         "passed": passed,
         "next_stage_run": False,
+        "target_label_policy_qualification": "Target labels were not used to construct predictions, but development accuracies were compared across predeclared kappa values. The failed candidate is not eligible as confirmatory evidence and no parameter was carried forward.",
         "note": "A prior full-six-task diagnostic exists but is excluded from parameter selection because it ran before the development gate was enforced.",
     }
     (RESULTS / "svpr_development_summary.json").write_text(
