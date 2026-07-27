@@ -39,3 +39,16 @@ Fusion uses:
 ## Go/no-go rule
 
 The P0 route advances if its selected configuration improves mean accuracy by at least 0.5 percentage points over original SA-TPA across the three development tasks and does not reduce the worst-task accuracy. The held-out W2D task is then evaluated once. Iterative updating is considered only after this gate passes.
+
+## P0 diagnostic addendum
+
+The preregistered class-adaptive fusion failed on all candidate tau values. A2W isolation runs showed that class-varying source weights caused the failure even when target weight was zero. Therefore `adaptive_satpa` is stopped and will not be promoted.
+
+A single simplified revision is allowed before closing P0:
+
+- retain the agreement-filtered target prototype;
+- retain a globally fixed source weight of 0.10;
+- retain the fixed agreement margin of 0.05;
+- compare global target weights 0.025, 0.05, and 0.10 on the same three development tasks.
+
+The latter two values are reused from the original SA-TPA target-weight sensitivity grid rather than introduced after inspecting Office-Home. Selection and go/no-go rules remain unchanged. No further margin or weight search is permitted in P0.
