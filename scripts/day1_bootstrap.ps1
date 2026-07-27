@@ -22,7 +22,8 @@ if ($RunFeatures) {
     foreach ($Job in $Jobs) {
         & $Python "$ProjectRoot\scripts\precompute_clip_features.py" `
             --domain-root $Job[1] `
-            --output "D:\456\data\processed\clip_features\$($Job[0])_vitb32_openai.npz"
+            --output "D:\456\data\processed\clip_features\$($Job[0])_vitb32_openai.npz" `
+            --write-source-labels
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }
 }

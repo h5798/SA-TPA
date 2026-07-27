@@ -1,0 +1,132 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import numpy as np
+
+
+def normalize(x: np.ndarray, axis: int = 1) -> np.ndarray:
+    x = np.asarray(x, dtype=np.float32)
+    return x / np.clip(np.linalg.norm(x, axis=axis, keepdims=True), 1e-12, None)
+
+
+def softmax(logits: np.ndarray) -> np.ndarray:
+    logits = logits.astype(np.float64)
+    logits -= logits.max(axis=1, keepdims=True)
+    exp = np.exp(logits)
+    return (exp / exp.sum(axis=1, keepdims=True)).astype(np.float32)
+
+
+def classify(features: np.ndarray, prototypes: np.ndarray, logit_scale: float = 100.0) -> np.ndarray:
+    return softmax(logit_scale * normalize(features) @ normalize(prototypes).T)
+
+
+def source_prototypes(features: np.ndarray, labels: np.ndarray, text: np.ndarray) -> np.ndarray:
+    prototypes = []
+    for class_index in range(len(text)):
+        selected = features[labels == class_index]
+        prototypes.append(text[class_index] if not len(selected) else normalize(selected.mean(0, keepdims=True))[0])
+    return normalize(np.stack(prototypes))
+
+
+def _uncertainty_weights(probabilities: np.ndarray) -> np.ndarray:
+    ordered = np.sort(probabilities, axis=1)
+    confidence = ordered[:, -1]
+    margin = ordered[:, -1] - ordered[:, -2]
+    entropy = -(probabilities * np.log(np.clip(probabilities, 1e-12, 1.0))).sum(axis=1)
+    certainty = 1.0 - entropy / np.log(probabilities.shape[1])
+    return np.clip(confidence * margin * certainty, 0.0, 1.0).astype(np.float32)
+
+
+def target_prototypes(
+    features: np.ndarray,
+    probabilities: np.ndarray,
+    fallback: np.ndarray,
+    threshold: float,
+    top_k: int,
+    class_prior_strength: float,
+) -> tuple[np.ndarray, dict]:
+    class_count = probabilities.shape[1]
+    top_k = max(1, min(int(top_k), class_count))
+    predicted_frequency = np.clip(probabilities.mean(0), 1e-8, None)
+    corrected = probabilities / np.power(predicted_frequency[None, :], class_prior_strength)
+    corrected /= corrected.sum(axis=1, keepdims=True)
+    uncertainty = _uncertainty_weights(corrected)
+    accepted = corrected.max(axis=1) >= threshold
+    top_indices = np.argpartition(corrected, -top_k, axis=1)[:, -top_k:]
+    assignments = np.zeros_like(corrected, dtype=np.float32)
+    rows = np.arange(len(features))[:, None]
+    assignments[rows, top_indices] = corrected[rows, top_indices]
+    assignments *= uncertainty[:, None] * accepted[:, None]
+
+    prototypes = []
+    effective_counts = assignments.sum(0)
+    for class_index in range(class_count):
+        weights = assignments[:, class_index]
+        if weights.sum() <= 1e-8:
+            prototypes.append(fallback[class_index])
+        else:
+            prototype = (weights[:, None] * features).sum(0) / weights.sum()
+            prototypes.append(normalize(prototype[None, :])[0])
+    diagnostics = {
+        "accepted_samples": int(accepted.sum()),
+        "acceptance_rate": float(accepted.mean()),
+        "mean_uncertainty_weight": float(uncertainty.mean()),
+        "classes_with_target_support": int((effective_counts > 1e-8).sum()),
+    }
+    return normalize(np.stack(prototypes)), diagnostics
+
+
+@dataclass(frozen=True)
+class MethodOutput:
+    probabilities: np.ndarray
+    prototypes: np.ndarray
+    diagnostics: dict
+
+
+def run_method(
+    method: str,
+    source_features: np.ndarray,
+    source_labels: np.ndarray,
+    target_features: np.ndarray,
+    text_ensemble: np.ndarray,
+    text_per_prompt: np.ndarray,
+    alpha_source: float = 0.1,
+    alpha_target: float = 0.025,
+    confidence_threshold: float = 0.7,
+    top_k: int = 1,
+    class_prior_strength: float = 0.1,
+) -> MethodOutput:
+    text_ensemble = normalize(text_ensemble)
+    source = source_prototypes(source_features, source_labels, text_ensemble)
+    diagnostics = {}
+
+    if method == "clip_zero_shot":
+        prototypes = normalize(text_per_prompt[:, 0, :])
+    elif method == "prompt_ensemble":
+        prototypes = text_ensemble
+    elif method == "source_prototype":
+        prototypes = source
+    elif method in {"satpa", "no_source_anchor"}:
+        source_weight = 0.0 if method == "no_source_anchor" else alpha_source
+        base = normalize((1.0 - source_weight) * text_ensemble + source_weight * source)
+        base_probabilities = classify(target_features, base)
+        target, diagnostics = target_prototypes(
+            target_features,
+            base_probabilities,
+            base,
+            confidence_threshold,
+            top_k,
+            class_prior_strength,
+        )
+        if alpha_target < 0 or source_weight < 0 or alpha_target + source_weight > 1:
+            raise ValueError("Prototype fusion weights must be nonnegative and sum to at most one")
+        prototypes = normalize(
+            (1.0 - source_weight - alpha_target) * text_ensemble
+            + source_weight * source
+            + alpha_target * target
+        )
+    else:
+        raise ValueError(f"Unknown method: {method}")
+    return MethodOutput(classify(target_features, prototypes), prototypes, diagnostics)
+

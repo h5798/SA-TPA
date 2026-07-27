@@ -67,14 +67,17 @@ def main(args):
         raise ValueError(f"No class directories found below {class_root}")
 
     text_features = []
+    text_features_per_prompt = []
     with torch.no_grad():
         for class_name in classes:
             texts = [prompt.format(readable(class_name)) for prompt in PROMPTS]
             features = model.encode_text(tokenizer(texts).to(device))
             features = features / features.norm(dim=1, keepdim=True)
+            text_features_per_prompt.append(features)
             prototype = features.mean(dim=0)
             text_features.append(prototype / prototype.norm())
         text_features = torch.stack(text_features)
+        text_features_per_prompt = torch.stack(text_features_per_prompt)
 
     dataset = UnlabeledImageDataset(args.domain_root, preprocess)
     loader = DataLoader(
@@ -98,6 +101,7 @@ def main(args):
         output,
         image_features=image_features,
         text_features=text_features.cpu().numpy().astype(np.float16),
+        text_features_per_prompt=text_features_per_prompt.cpu().numpy().astype(np.float16),
         probabilities=probs,
         predictions=probs.argmax(1),
         confidences=probs.max(1),
