@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -44,19 +45,33 @@ def find_domain_parent(domain_names):
     raise FileNotFoundError(f"Could not locate domains {domain_names} below {input_root}")
 
 
+def find_normalized_domains(domain_names):
+    wanted = {re.sub(r"[^a-z0-9]", "", name.lower()): name for name in domain_names}
+    for art in Path("/kaggle/input").rglob("*"):
+        if not art.is_dir() or re.sub(r"[^a-z0-9]", "", art.name.lower()) != "art":
+            continue
+        children = {
+            re.sub(r"[^a-z0-9]", "", child.name.lower()): child
+            for child in art.parent.iterdir() if child.is_dir()
+        }
+        if set(wanted).issubset(children):
+            return {original: children[key] for key, original in wanted.items()}
+    raise FileNotFoundError(f"Could not locate normalized domains {domain_names}")
+
+
 def resolve_jobs():
     office31 = find_domain_parent(("amazon", "dslr", "webcam"))
-    officehome = find_domain_parent(("Art", "Clipart", "Product", "Real World"))
+    officehome = find_normalized_domains(("Art", "Clipart", "Product", "Real World"))
     print("Office-31 root:", office31)
-    print("Office-Home root:", officehome)
+    print("Office-Home domains:", officehome)
     return [
         ("office31_amazon", str(office31 / "amazon")),
         ("office31_dslr", str(office31 / "dslr")),
         ("office31_webcam", str(office31 / "webcam")),
-        ("officehome_art", str(officehome / "Art")),
-        ("officehome_clipart", str(officehome / "Clipart")),
-        ("officehome_product", str(officehome / "Product")),
-        ("officehome_real_world", str(officehome / "Real World")),
+        ("officehome_art", str(officehome["Art"])),
+        ("officehome_clipart", str(officehome["Clipart"])),
+        ("officehome_product", str(officehome["Product"])),
+        ("officehome_real_world", str(officehome["Real World"])),
     ]
 
 
