@@ -71,3 +71,9 @@
   parameters and no backpropagation.
 - Created and launched the private Kaggle notebook `hrwhrw/sa-tpa-vit-b16-extension` for the
   ViT-B/16 extension. It automatically splits domain extraction across two GPUs when available.
+- Kaggle ViT-B/16 version 5 completed successfully. SA-TPA averaged 85.052% on Office-31,
+  improving over prompt ensemble by 2.142 points and over no-source-anchor by 1.976 points.
+- On Office-Home with ViT-B/16, SA-TPA averaged 84.190%, improving over prompt ensemble by
+  0.882 point and over no-source-anchor by 0.470 point; all 12 tasks exceeded prompt ensemble.
+- Downloaded and verified all Kaggle outputs; the aggregate ZIP passed integrity checking. The
+  redundant local ViT-B/16 run was stopped after Kaggle completion.

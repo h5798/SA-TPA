@@ -19,6 +19,8 @@ def main():
     officehome = means(ROOT / "results/officehome/confirmatory_v1.csv")
     office31_extra = means(ROOT / "results/office31/additional_baselines_v1.csv")
     officehome_extra = means(ROOT / "results/officehome/additional_baselines_v1.csv")
+    office31_vitb16 = means(ROOT / "results/vitb16/office31_vitb16_results.csv")
+    officehome_vitb16 = means(ROOT / "results/vitb16/officehome_vitb16_results.csv")
     home = pd.read_csv(ROOT / "results/officehome/confirmatory_v1.csv").pivot(
         index="task", columns="method", values="accuracy"
     )
@@ -31,6 +33,8 @@ def main():
         "backbone": "OpenAI CLIP ViT-B/32",
         "office31_mean_accuracy": {**office31, **office31_extra},
         "officehome_mean_accuracy": {**officehome, **officehome_extra},
+        "vitb16_office31_mean_accuracy": office31_vitb16,
+        "vitb16_officehome_mean_accuracy": officehome_vitb16,
         "officehome_gates": {
             "mean_delta_vs_zero_shot": float(delta_zero.mean()),
             "mean_delta_vs_prompt_ensemble": float(delta_prompt.mean()),
@@ -56,4 +60,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
