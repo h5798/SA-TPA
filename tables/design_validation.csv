@@ -4,3 +4,4 @@ Agreement filtering,"Office-31, 6 tasks",84.02527141943304,84.79983792747295,0.7
 Agreement filtering,"Office-Home, 12 tasks",80.8966574817389,80.63405913763766,-0.26259834410123517,Reject cross-dataset
 Iterative update (3 vs 1 rounds),Office-31 A2W,85.66037735849056,85.66037735849056,0.0,Reject
 SPT-SA optimal transport,"Office-31, 3 development tasks",84.06668408115151,83.905399160086,-0.1612849210655014,Reject at gate
+SVPR prompt weighting (best kappa=20),"Office-31, 3 development tasks",84.06668408115151,84.13870860431835,0.07202452316684571,Reject at gate

@@ -185,12 +185,15 @@ def build_design_validation() -> pd.DataFrame:
     iteration_delta = iteration.accuracy.iloc[-1] - iteration.accuracy.iloc[0]
     spt = read_csv(RESULTS / "spt_sa" / "development_epsilon.csv")
     spt_best = spt.groupby("ot_epsilon").accuracy.mean().max()
+    svpr_summary = json.loads((RESULTS / "svpr" / "svpr_development_summary.json").read_text(encoding="utf-8"))
+    svpr_best = svpr_summary["evaluations"][str(svpr_summary["best_kappa"])]["mean_accuracy"]
     return pd.DataFrame([
         {"Extension": f"Class-adaptive fusion (best tau={best_tau:g})", "Scope": "Office-31, 3 development tasks", "Reference": original_dev, "Candidate": best_adaptive, "Delta": best_adaptive-original_dev, "Decision": "Reject"},
         {"Extension": "Agreement filtering", "Scope": "Office-31, 6 tasks", "Reference": original_o31, "Candidate": agreement_o31, "Delta": agreement_o31-original_o31, "Decision": "Not promoted"},
         {"Extension": "Agreement filtering", "Scope": "Office-Home, 12 tasks", "Reference": original_oh, "Candidate": agreement_oh, "Delta": agreement_oh-original_oh, "Decision": "Reject cross-dataset"},
         {"Extension": "Iterative update (3 vs 1 rounds)", "Scope": "Office-31 A2W", "Reference": iteration.accuracy.iloc[0], "Candidate": iteration.accuracy.iloc[-1], "Delta": iteration_delta, "Decision": "Reject"},
         {"Extension": "SPT-SA optimal transport", "Scope": "Office-31, 3 development tasks", "Reference": original_dev, "Candidate": spt_best, "Delta": spt_best-original_dev, "Decision": "Reject at gate"},
+        {"Extension": f"SVPR prompt weighting (best kappa={svpr_summary['best_kappa']:g})", "Scope": "Office-31, 3 development tasks", "Reference": original_dev, "Candidate": svpr_best, "Delta": svpr_best-original_dev, "Decision": "Reject at gate"},
     ])
 
 

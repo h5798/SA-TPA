@@ -16,6 +16,8 @@ INCLUDED_DOCS = [
     PROJECT / "docs" / "data_replica_audit.md",
     PROJECT / "docs" / "claims_evidence_index.md",
     PROJECT / "docs" / "final_non_writing_completion_report.md",
+    PROJECT / "docs" / "svpr_experiment_audit.md",
+    PROJECT / "protocols" / "svpr_development_protocol.md",
 ]
 
 
@@ -59,4 +61,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

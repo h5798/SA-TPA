@@ -4,6 +4,8 @@
 
 The experimental phase is closed. The retained method is the original fixed-weight SA-TPA. No further method search, parameter tuning, or benchmark expansion is required before manuscript preparation.
 
+Post-freeze addendum: Source-Validated Prompt Reweighting (SVPR) was subsequently tested under a corrected three-task Office-31 development gate. Its best gain was only +0.072 pp, so it was rejected and did not alter the retained method.
+
 Frozen configuration:
 
 - Text/source/target fusion weights: 0.875 / 0.100 / 0.025
@@ -55,6 +57,12 @@ Frozen configuration:
    - SHA256 manifest generated for final tables, figures, workbook, and audit documents.
    - File: `outputs/final_assets/deliverables_sha256_manifest.csv`.
 
+9. **Post-freeze SVPR candidate**
+   - Tested `kappa` values 0, 5, 10, and 20 on A2W, W2A, and D2W.
+   - Best result: `kappa=20`, +0.072 pp mean gain; failed the +0.4 pp gate.
+   - Corrected sequence stopped before W2D, A2D, D2A, and Office-Home.
+   - Files: `docs/svpr_experiment_audit.md`, `D:/456/results/svpr/svpr_development_summary.json`.
+
 ## Final verified headline results
 
 | Benchmark | SA-TPA | Prompt Ensemble | Gain |
@@ -72,8 +80,8 @@ Frozen configuration:
 - Efficiency memory values are host allocations during adaptation, not end-to-end GPU-memory measurements.
 - The local and Kaggle dataset replicas are protocol-compatible, but byte-identical raw imagery was not verified.
 - The uncertainty component contributes only marginally and is slightly negative on Office-Home; the defensible core contribution is the fixed source-anchored tri-prototype fusion and zero-backpropagation adaptation.
+- Source-validated prompt-template preferences did not provide a material development gain and are not part of the final method.
 
 ## Stop condition
 
 All planned non-writing tasks are complete after the final verification checks and hash manifest pass. Further experiments should only be reopened if a reviewer, coauthor, or explicit manuscript requirement identifies a concrete missing comparison.
-

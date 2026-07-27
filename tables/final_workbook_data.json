@@ -744,6 +744,14 @@
         "Candidate": 83.905399160086,
         "Delta": -0.1612849210655014,
         "Decision": "Reject at gate"
+      },
+      {
+        "Extension": "SVPR prompt weighting (best kappa=20)",
+        "Scope": "Office-31, 3 development tasks",
+        "Reference": 84.06668408115151,
+        "Candidate": 84.13870860431835,
+        "Delta": 0.07202452316684571,
+        "Decision": "Reject at gate"
       }
     ]
   },

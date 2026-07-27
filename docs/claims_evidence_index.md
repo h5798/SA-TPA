@@ -59,11 +59,14 @@ This index defines which experimental claims are supported by the frozen evidenc
 - Agreement filtering: +0.775 pp on Office-31 but −0.263 pp on Office-Home; rejected for failure to generalize across datasets.
 - Iterative update: no change on the A2W gate task.
 - SPT-SA optimal transport: −0.161 pp on the three-task Office-31 gate; rejected.
+- Source-Validated Prompt Reweighting (SVPR): the best candidate (`kappa=20`) improved the three-task Office-31 development mean by only 0.072 pp, below the predeclared 0.4 pp gate; rejected without corrected-sequence expansion.
 - Evidence:
   - `D:/456/results/adaptive/`
   - `D:/456/results/spt_sa/development_epsilon.csv`
   - `D:/456/project/docs/adaptive_satpa_targeted_audit.md`
   - `D:/456/project/docs/spt_sa_experiment_audit.md`
+  - `D:/456/project/docs/svpr_experiment_audit.md`
+  - `D:/456/results/svpr/svpr_development_summary.json`
 - Consolidated table: `D:/456/project/tables/design_validation.csv`
 
 **Allowed wording:** fixed fusion was an evidence-based stability choice after controlled tests of more complex alternatives.
@@ -86,4 +89,3 @@ This index defines which experimental claims are supported by the frozen evidenc
 - Data-replica audit: `D:/456/project/docs/data_replica_audit.md`
 - Final workbook: `D:/456/project/outputs/final_assets/SA-TPA_Final_Experiment_Assets.xlsx`
 - Final deliverable hashes: `D:/456/project/outputs/final_assets/deliverables_sha256_manifest.csv`
-
