@@ -113,7 +113,8 @@ if __name__ == "__main__":
     parser.add_argument("--task", required=True)
     parser.add_argument("--run-tag", default="main")
     parser.add_argument("--method", required=True, choices=(
-        "clip_zero_shot", "prompt_ensemble", "source_prototype", "no_source_anchor", "satpa"
+        "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
+        "no_source_anchor", "satpa_no_uncertainty", "satpa"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)

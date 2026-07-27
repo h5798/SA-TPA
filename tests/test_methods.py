@@ -30,7 +30,13 @@ class MethodTests(unittest.TestCase):
         self.assertTrue(np.isfinite(output.probabilities).all())
         self.assertEqual(output.probabilities.shape, (3, 3))
 
+    def test_no_uncertainty_ablation_is_finite(self):
+        output = run_method(
+            "satpa_no_uncertainty", self.source, self.labels, self.target, self.text, self.per_prompt
+        )
+        self.assertTrue(np.isfinite(output.probabilities).all())
+
+
 
 if __name__ == "__main__":
     unittest.main()
-

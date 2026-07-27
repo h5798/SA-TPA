@@ -45,13 +45,14 @@ def target_prototypes(
     threshold: float,
     top_k: int,
     class_prior_strength: float,
+    use_uncertainty: bool = True,
 ) -> tuple[np.ndarray, dict]:
     class_count = probabilities.shape[1]
     top_k = max(1, min(int(top_k), class_count))
     predicted_frequency = np.clip(probabilities.mean(0), 1e-8, None)
     corrected = probabilities / np.power(predicted_frequency[None, :], class_prior_strength)
     corrected /= corrected.sum(axis=1, keepdims=True)
-    uncertainty = _uncertainty_weights(corrected)
+    uncertainty = _uncertainty_weights(corrected) if use_uncertainty else np.ones(len(features), dtype=np.float32)
     accepted = corrected.max(axis=1) >= threshold
     top_indices = np.argpartition(corrected, -top_k, axis=1)[:, -top_k:]
     assignments = np.zeros_like(corrected, dtype=np.float32)
@@ -107,7 +108,9 @@ def run_method(
         prototypes = text_ensemble
     elif method == "source_prototype":
         prototypes = source
-    elif method in {"satpa", "no_source_anchor"}:
+    elif method == "source_anchored_text":
+        prototypes = normalize((1.0 - alpha_source) * text_ensemble + alpha_source * source)
+    elif method in {"satpa", "no_source_anchor", "satpa_no_uncertainty"}:
         source_weight = 0.0 if method == "no_source_anchor" else alpha_source
         base = normalize((1.0 - source_weight) * text_ensemble + source_weight * source)
         base_probabilities = classify(target_features, base)
@@ -118,6 +121,7 @@ def run_method(
             confidence_threshold,
             top_k,
             class_prior_strength,
+            use_uncertainty=method != "satpa_no_uncertainty",
         )
         if alpha_target < 0 or source_weight < 0 or alpha_target + source_weight > 1:
             raise ValueError("Prototype fusion weights must be nonnegative and sum to at most one")
@@ -129,4 +133,3 @@ def run_method(
     else:
         raise ValueError(f"Unknown method: {method}")
     return MethodOutput(classify(target_features, prototypes), prototypes, diagnostics)
-
