@@ -11,8 +11,8 @@
   "target_update_steps": 1,
   "office31_role": "development",
   "officehome_role": "confirmatory",
-  "locked_for_officehome": false,
-  "lock_timestamp": null,
-  "git_commit": null,
-  "config_sha256": null
+  "locked_for_officehome": true,
+  "lock_timestamp": "2026-07-27T12:46:56.8976496+08:00",
+  "git_commit": "ba45510545670f1a6458d0433a47a6383e9e802a",
+  "config_sha256": "72a4cce1faaa248cb1d2ca611ebc38d72dcbd14827719aa12c2a878882b87f15"
 }

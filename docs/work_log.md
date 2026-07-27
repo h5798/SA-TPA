@@ -29,3 +29,19 @@
 2. Establish exact CLIP zero-shot and prompt-ensemble baselines.
 3. Compare full SA-TPA against `alpha_source = 0` before broadening the experiment matrix.
 4. Lock parameters and config hash before any Office-Home target metric is inspected.
+
+## 2026-07-27 — Office-31 development gate
+
+- Extracted target-safe ViT-B/32 features for all seven Office-31/Office-Home domains.
+- Completed the six Office-31 transfer tasks with five main development methods.
+- Mean accuracy: CLIP zero-shot 81.459%, prompt ensemble 82.481%, no-source-anchor 82.989%,
+  and full SA-TPA 84.025%.
+- Full SA-TPA improved over prompt ensemble by 1.545 points and over `alpha_source = 0` by
+  1.037 points; the source-anchor comparison improved on five tasks and tied on one.
+- Completed 138 predeclared one-factor sensitivity runs. Thresholds 0.5--0.8, Top-K 1--8,
+  and prior strengths 0--0.2 were stable. Larger prototype weights improved Office-31 accuracy
+  but worsened calibration, so the original conservative defaults were retained.
+- Component means: text only 82.481%, text+source 83.492%, text+target 82.989%, and full
+  tri-prototype 84.025%. Removing uncertainty weighting reduced accuracy by only 0.066 point,
+  so uncertainty remains an auxiliary component rather than the primary claim.
+- Locked the original parameters for Office-Home before inspecting any Office-Home metric.
