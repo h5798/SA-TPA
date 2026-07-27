@@ -52,3 +52,16 @@ A single simplified revision is allowed before closing P0:
 - compare global target weights 0.025, 0.05, and 0.10 on the same three development tasks.
 
 The latter two values are reused from the original SA-TPA target-weight sensitivity grid rather than introduced after inspecting Office-Home. Selection and go/no-go rules remain unchanged. No further margin or weight search is permitted in P0.
+
+## P1 iterative update
+
+P0 selected fixed source weight 0.10 and fixed target weight 0.10. The selected configuration improved the three-task development mean by more than 0.5 percentage points without reducing worst-task accuracy, and it improved the single held-out W2D result. P1 is therefore permitted.
+
+- Development task: A2W only.
+- Candidate maximum rounds: 1, 2, 3.
+- Round one uses text/source agreement.
+- Later rounds require agreement between the current fused classifier and the fixed source visual classifier.
+- Stop when pseudo-label change is below 1%.
+- Roll back a proposed round when mean maximum probability decreases.
+- If round two does not improve A2W accuracy over round one, iterative updating is stopped and not expanded.
+- If round two improves but round three degrades, select two rounds. No iteration parameter is selected using W2D or Office-Home.

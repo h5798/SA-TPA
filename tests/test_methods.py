@@ -54,6 +54,15 @@ class MethodTests(unittest.TestCase):
         self.assertGreaterEqual(output.diagnostics["min_target_weight"], 0.0)
         self.assertLessEqual(output.diagnostics["max_target_weight"], 0.10 + 1e-7)
 
+    def test_iterative_variant_is_bounded(self):
+        output = run_method(
+            "iterative_satpa", self.source, self.labels, self.target, self.text, self.per_prompt,
+            target_update_steps=3,
+        )
+        np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
+        self.assertGreaterEqual(output.diagnostics["rounds_completed"], 1)
+        self.assertLessEqual(output.diagnostics["rounds_completed"], 3)
+
 
 
 

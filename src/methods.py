@@ -225,6 +225,7 @@ def run_method(
     adaptive_source_min: float = 0.05,
     adaptive_source_max: float = 0.30,
     adaptive_target_max: float = 0.10,
+    target_update_steps: int = 1,
 ) -> MethodOutput:
     text_ensemble = normalize(text_ensemble)
     source = source_prototypes(source_features, source_labels, text_ensemble)
@@ -265,7 +266,7 @@ def run_method(
             + source_weight * source
             + alpha_target * target
         )
-    elif method in {"satpa_agreement", "adaptive_satpa"}:
+    elif method in {"satpa_agreement", "adaptive_satpa", "iterative_satpa"}:
         text_probabilities = classify(target_features, text_ensemble)
         source_probabilities = classify(target_features, source)
         fallback = normalize((1.0 - alpha_source) * text_ensemble + alpha_source * source)
@@ -277,7 +278,7 @@ def run_method(
             margin_threshold=agreement_margin,
             reliability_tau=reliability_tau,
         )
-        if method == "satpa_agreement":
+        if method in {"satpa_agreement", "iterative_satpa"}:
             prototypes = normalize(
                 (1.0 - alpha_source - alpha_target) * text_ensemble
                 + alpha_source * source
@@ -294,6 +295,51 @@ def run_method(
                 target_weight_max=adaptive_target_max,
             )
             diagnostics.update(fusion_diagnostics)
+        if method == "iterative_satpa":
+            if target_update_steps < 1:
+                raise ValueError("target_update_steps must be at least one")
+            current_probabilities = classify(target_features, prototypes)
+            current_labels = current_probabilities.argmax(1)
+            current_confidence = float(current_probabilities.max(1).mean())
+            rounds_completed = 1
+            last_change_rate = 1.0
+            stopped_reason = "max_steps"
+            for step in range(2, target_update_steps + 1):
+                next_target, _, next_diagnostics = agreement_target_prototypes(
+                    target_features,
+                    current_probabilities,
+                    source_probabilities,
+                    fallback,
+                    margin_threshold=agreement_margin,
+                    reliability_tau=reliability_tau,
+                )
+                next_prototypes = normalize(
+                    (1.0 - alpha_source - alpha_target) * text_ensemble
+                    + alpha_source * source
+                    + alpha_target * next_target
+                )
+                next_probabilities = classify(target_features, next_prototypes)
+                next_labels = next_probabilities.argmax(1)
+                next_confidence = float(next_probabilities.max(1).mean())
+                last_change_rate = float((next_labels != current_labels).mean())
+                if next_confidence < current_confidence:
+                    stopped_reason = "confidence_rollback"
+                    break
+                prototypes = next_prototypes
+                current_probabilities = next_probabilities
+                current_labels = next_labels
+                current_confidence = next_confidence
+                diagnostics.update(next_diagnostics)
+                rounds_completed = step
+                if last_change_rate < 0.01:
+                    stopped_reason = "label_stability"
+                    break
+            diagnostics.update({
+                "rounds_completed": rounds_completed,
+                "last_label_change_rate": last_change_rate,
+                "final_mean_confidence": current_confidence,
+                "stopped_reason": stopped_reason,
+            })
     else:
         raise ValueError(f"Unknown method: {method}")
     return MethodOutput(classify(target_features, prototypes), prototypes, diagnostics)

@@ -72,6 +72,7 @@ def main(args):
         adaptive_source_min=args.adaptive_source_min,
         adaptive_source_max=args.adaptive_source_max,
         adaptive_target_max=args.adaptive_target_max,
+        target_update_steps=args.target_update_steps,
     )
     elapsed = time.perf_counter() - start
 
@@ -105,6 +106,7 @@ def main(args):
         "adaptive_source_min": args.adaptive_source_min,
         "adaptive_source_max": args.adaptive_source_max,
         "adaptive_target_max": args.adaptive_target_max,
+        "target_update_steps": args.target_update_steps,
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
@@ -122,6 +124,10 @@ def main(args):
         "mean_target_weight": None,
         "min_target_weight": None,
         "max_target_weight": None,
+        "rounds_completed": None,
+        "last_label_change_rate": None,
+        "final_mean_confidence": None,
+        "stopped_reason": None,
         **output.diagnostics,
     }
     prediction_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -141,7 +147,7 @@ if __name__ == "__main__":
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
         "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa",
-        "satpa_agreement", "adaptive_satpa"
+        "satpa_agreement", "adaptive_satpa", "iterative_satpa"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)
@@ -161,4 +167,5 @@ if __name__ == "__main__":
     parser.add_argument("--adaptive-source-min", type=float, default=0.05)
     parser.add_argument("--adaptive-source-max", type=float, default=0.30)
     parser.add_argument("--adaptive-target-max", type=float, default=0.10)
+    parser.add_argument("--target-update-steps", type=int, default=1)
     main(parser.parse_args())
