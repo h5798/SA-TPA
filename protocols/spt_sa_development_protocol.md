@@ -40,3 +40,11 @@ Proceed to W2D only if the selected epsilon improves the three-task mean over or
 at least 0.5 percentage points, does not reduce worst-task accuracy, produces finite probabilities,
 and has no class with effective sample size below 3. If the gate fails, stop SPT-SA without testing
 Office-Home or introducing post-hoc parameters.
+
+## Recorded outcome
+
+The gate failed. Epsilon 0.01 had the highest development mean at 83.905%, below original SA-TPA
+at 84.067% on the same three tasks. Its worst-task result was also lower (81.150% versus 81.257%).
+All three task accuracies declined and no class had ESS below 3. W2D, the remaining Office-31
+tasks, and Office-Home were therefore not run for SPT-SA. No marginal, prior-mix, or fusion-weight
+parameter was searched after this result.

@@ -96,3 +96,18 @@
   Retain original SA-TPA as the main method. Preserve all negative results as exploratory evidence.
 - Audited frozen text features across domains. Class ordering matched exactly, and text/prompt
   feature arrays had zero maximum absolute difference within each dataset.
+
+## 2026-07-27 - SPT-SA optimal-transport gate
+
+- Preregistered and implemented log-domain Sinkhorn soft assignment with the original fixed
+  SA-TPA fusion geometry. Eleven unit tests passed before target accuracy was inspected.
+- Evaluated epsilon values 0.01, 0.03, 0.05, 0.10, and 0.20 on A2W, W2A, and D2W only.
+- Epsilon 0.01 was best at 83.905% mean accuracy, below original SA-TPA at 84.067%. Worst-task
+  accuracy also declined from 81.257% to 81.150%, so the preregistered gate failed.
+- All classes had effective sample size above 3 and every class received at least one Top-1
+  assignment. The failure was not caused by missing-class coverage or numerical collapse.
+- Post-gate diagnosis found that OT changed 4.8%--10.1% of pseudo-labels. On W2A and D2W it
+  converted more correct predictions to errors than errors to correct predictions; D2W pseudo-label
+  accuracy declined from 85.409% to 84.277%.
+- Stopped SPT-SA without evaluating W2D or Office-Home and without searching additional priors,
+  marginal mixtures, fallback rules, or fusion weights. Original SA-TPA remains the final method.
