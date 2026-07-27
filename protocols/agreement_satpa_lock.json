@@ -17,5 +17,9 @@
   "officehome_used_for_selection": false,
   "adaptive_class_weights_promoted": false,
   "iterative_updates_promoted": false,
+  "secondary_extension_mean_accuracy": 80.6340591376377,
+  "original_satpa_secondary_mean_accuracy": 80.8966574817389,
+  "promoted_after_secondary_extension": false,
+  "final_decision": "retain_original_satpa",
   "implementation_git_commit": "3ba3eb7b8223b178facd95ce00259407fbd961c3"
 }

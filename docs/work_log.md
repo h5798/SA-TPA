@@ -77,3 +77,22 @@
   0.882 point and over no-source-anchor by 0.470 point; all 12 tasks exceeded prompt ensemble.
 - Downloaded and verified all Kaggle outputs; the aggregate ZIP passed integrity checking. The
   redundant local ViT-B/16 run was stopped after Kaggle completion.
+
+## 2026-07-27 - Targeted improvement audit
+
+- Preregistered a P0 study on Office-31 A2W, W2A, and D2W, with W2D held out.
+- Class-adaptive source/target fusion failed severely for every preregistered tau value. An A2W
+  isolation run showed that varying source-prototype weight by class was the primary failure mode.
+- Replaced the rejected adaptive fusion with a simpler agreement filter while keeping global
+  fusion weights. With source/target weights 0.10/0.10, the six-task Office-31 mean increased from
+  84.025% to 84.800%; all six tasks improved and W2D improved by 2.008 points.
+- A preregistered iterative update made no accuracy change on A2W: one, two, and three requested
+  rounds all produced 85.660%. Iteration was therefore rejected.
+- The locked agreement candidate was then evaluated on all 12 Office-Home tasks as a secondary
+  extension. It averaged 80.634%, below original SA-TPA at 80.897% by 0.263 point, with seven wins
+  and five losses. A mechanism diagnostic using the original target weight 0.025 averaged 80.740%,
+  also below original SA-TPA by 0.157 point.
+- Decision: do not promote class-adaptive fusion, agreement filtering, or iterative updating.
+  Retain original SA-TPA as the main method. Preserve all negative results as exploratory evidence.
+- Audited frozen text features across domains. Class ordering matched exactly, and text/prompt
+  feature arrays had zero maximum absolute difference within each dataset.
