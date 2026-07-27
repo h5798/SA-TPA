@@ -1,0 +1,18 @@
+{
+  "method": "SA-TPA",
+  "backbone": "ViT-B-32",
+  "weights": "openai",
+  "prompt_count": 4,
+  "alpha_source": 0.1,
+  "alpha_target": 0.025,
+  "top_k": 1,
+  "confidence_threshold": 0.7,
+  "class_prior_strength": 0.1,
+  "target_update_steps": 1,
+  "office31_role": "development",
+  "officehome_role": "confirmatory",
+  "locked_for_officehome": false,
+  "lock_timestamp": null,
+  "git_commit": null,
+  "config_sha256": null
+}

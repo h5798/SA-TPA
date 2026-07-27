@@ -1,0 +1,25 @@
+project_root: D:/456
+seed: 2026
+model:
+  name: ViT-B-32
+  weights: openai
+  prompt_templates:
+    - "a photo of a {}."
+    - "a product photo of a {}."
+    - "an image of a {}."
+    - "a close-up photo of a {}."
+method:
+  alpha_source: 0.1
+  alpha_target: 0.025
+  top_k: 1
+  confidence_threshold: 0.7
+  class_prior_strength: 0.1
+  target_update_steps: 1
+data:
+  office31: D:/456/data/raw/office31/Office-31
+  officehome: D:/456/data/raw/officehome/OfficeHomeDataset
+features: D:/456/data/processed/clip_features
+cache: D:/456/cache
+results: D:/456/results
+logs: D:/456/logs
+
