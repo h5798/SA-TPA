@@ -67,6 +67,11 @@ def main(args):
         t3a_filter_k=args.t3a_filter_k,
         tip_alpha=args.tip_alpha,
         tip_beta=args.tip_beta,
+        agreement_margin=args.agreement_margin,
+        reliability_tau=args.reliability_tau,
+        adaptive_source_min=args.adaptive_source_min,
+        adaptive_source_max=args.adaptive_source_max,
+        adaptive_target_max=args.adaptive_target_max,
     )
     elapsed = time.perf_counter() - start
 
@@ -95,6 +100,11 @@ def main(args):
         "t3a_filter_k": args.t3a_filter_k,
         "tip_alpha": args.tip_alpha,
         "tip_beta": args.tip_beta,
+        "agreement_margin": args.agreement_margin,
+        "reliability_tau": args.reliability_tau,
+        "adaptive_source_min": args.adaptive_source_min,
+        "adaptive_source_max": args.adaptive_source_max,
+        "adaptive_target_max": args.adaptive_target_max,
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
@@ -102,6 +112,16 @@ def main(args):
         "acceptance_rate": None,
         "mean_uncertainty_weight": None,
         "classes_with_target_support": None,
+        "mean_effective_count": None,
+        "mean_class_reliability": None,
+        "min_class_reliability": None,
+        "max_class_reliability": None,
+        "mean_source_weight": None,
+        "min_source_weight": None,
+        "max_source_weight": None,
+        "mean_target_weight": None,
+        "min_target_weight": None,
+        "max_target_weight": None,
         **output.diagnostics,
     }
     prediction_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -120,7 +140,8 @@ if __name__ == "__main__":
     parser.add_argument("--run-tag", default="main")
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
-        "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa"
+        "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa",
+        "satpa_agreement", "adaptive_satpa"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)
@@ -135,4 +156,9 @@ if __name__ == "__main__":
     parser.add_argument("--t3a-filter-k", type=int, default=5)
     parser.add_argument("--tip-alpha", type=float, default=1.0)
     parser.add_argument("--tip-beta", type=float, default=5.0)
+    parser.add_argument("--agreement-margin", type=float, default=0.05)
+    parser.add_argument("--reliability-tau", type=float, default=5.0)
+    parser.add_argument("--adaptive-source-min", type=float, default=0.05)
+    parser.add_argument("--adaptive-source-max", type=float, default=0.30)
+    parser.add_argument("--adaptive-target-max", type=float, default=0.10)
     main(parser.parse_args())

@@ -71,6 +71,93 @@ def _uncertainty_weights(probabilities: np.ndarray) -> np.ndarray:
     return np.clip(confidence * margin * certainty, 0.0, 1.0).astype(np.float32)
 
 
+def agreement_target_prototypes(
+    features: np.ndarray,
+    text_probabilities: np.ndarray,
+    source_probabilities: np.ndarray,
+    fallback: np.ndarray,
+    margin_threshold: float = 0.05,
+    reliability_tau: float = 5.0,
+) -> tuple[np.ndarray, np.ndarray, dict]:
+    """Build hard target prototypes only from text/source-agreed samples.
+
+    The returned class reliability is label-free. It combines Kish effective
+    sample size with the mean normalized entropy of accepted samples.
+    """
+    class_count = text_probabilities.shape[1]
+    text_labels = text_probabilities.argmax(1)
+    source_labels = source_probabilities.argmax(1)
+    consensus = 0.5 * (text_probabilities + source_probabilities)
+    ordered = np.sort(consensus, axis=1)
+    margins = ordered[:, -1] - ordered[:, -2]
+    accepted = (text_labels == source_labels) & (margins > margin_threshold)
+    weights = np.maximum(margins - margin_threshold, 0.0).astype(np.float32) * accepted
+    entropy = -(consensus * np.log(np.clip(consensus, 1e-12, 1.0))).sum(1)
+    normalized_entropy = entropy / np.log(class_count)
+
+    prototypes = []
+    reliability = np.zeros(class_count, dtype=np.float32)
+    effective_counts = np.zeros(class_count, dtype=np.float32)
+    accepted_counts = np.zeros(class_count, dtype=np.int32)
+    for class_index in range(class_count):
+        selected = accepted & (text_labels == class_index)
+        class_weights = weights[selected]
+        accepted_counts[class_index] = int(selected.sum())
+        if not len(class_weights) or class_weights.sum() <= 1e-8:
+            prototypes.append(fallback[class_index])
+            continue
+        effective_count = float(class_weights.sum() ** 2 / np.clip((class_weights ** 2).sum(), 1e-12, None))
+        effective_counts[class_index] = effective_count
+        certainty = float(1.0 - normalized_entropy[selected].mean())
+        reliability[class_index] = (
+            effective_count / (effective_count + reliability_tau)
+        ) * np.clip(certainty, 0.0, 1.0)
+        prototype = (class_weights[:, None] * features[selected]).sum(0) / class_weights.sum()
+        prototypes.append(normalize(prototype[None, :])[0])
+
+    diagnostics = {
+        "accepted_samples": int(accepted.sum()),
+        "acceptance_rate": float(accepted.mean()),
+        "classes_with_target_support": int((accepted_counts > 0).sum()),
+        "mean_effective_count": float(effective_counts.mean()),
+        "mean_class_reliability": float(reliability.mean()),
+        "min_class_reliability": float(reliability.min()),
+        "max_class_reliability": float(reliability.max()),
+    }
+    return normalize(np.stack(prototypes)), reliability, diagnostics
+
+
+def adaptive_prototype_fusion(
+    text: np.ndarray,
+    source: np.ndarray,
+    target: np.ndarray,
+    reliability: np.ndarray,
+    source_weight_min: float = 0.05,
+    source_weight_max: float = 0.30,
+    target_weight_max: float = 0.10,
+) -> tuple[np.ndarray, dict]:
+    reliability = np.clip(np.asarray(reliability, dtype=np.float32), 0.0, 1.0)
+    source_weights = source_weight_min + (source_weight_max - source_weight_min) * (1.0 - reliability)
+    target_weights = target_weight_max * reliability
+    text_weights = 1.0 - source_weights - target_weights
+    if np.any(text_weights < 0):
+        raise ValueError("Adaptive fusion weights leave a negative text weight")
+    prototypes = normalize(
+        text_weights[:, None] * text
+        + source_weights[:, None] * source
+        + target_weights[:, None] * target
+    )
+    diagnostics = {
+        "mean_source_weight": float(source_weights.mean()),
+        "min_source_weight": float(source_weights.min()),
+        "max_source_weight": float(source_weights.max()),
+        "mean_target_weight": float(target_weights.mean()),
+        "min_target_weight": float(target_weights.min()),
+        "max_target_weight": float(target_weights.max()),
+    }
+    return prototypes, diagnostics
+
+
 def target_prototypes(
     features: np.ndarray,
     probabilities: np.ndarray,
@@ -133,6 +220,11 @@ def run_method(
     t3a_filter_k: int = 5,
     tip_alpha: float = 1.0,
     tip_beta: float = 5.0,
+    agreement_margin: float = 0.05,
+    reliability_tau: float = 5.0,
+    adaptive_source_min: float = 0.05,
+    adaptive_source_max: float = 0.30,
+    adaptive_target_max: float = 0.10,
 ) -> MethodOutput:
     text_ensemble = normalize(text_ensemble)
     source = source_prototypes(source_features, source_labels, text_ensemble)
@@ -173,6 +265,35 @@ def run_method(
             + source_weight * source
             + alpha_target * target
         )
+    elif method in {"satpa_agreement", "adaptive_satpa"}:
+        text_probabilities = classify(target_features, text_ensemble)
+        source_probabilities = classify(target_features, source)
+        fallback = normalize((1.0 - alpha_source) * text_ensemble + alpha_source * source)
+        target, reliability, diagnostics = agreement_target_prototypes(
+            target_features,
+            text_probabilities,
+            source_probabilities,
+            fallback,
+            margin_threshold=agreement_margin,
+            reliability_tau=reliability_tau,
+        )
+        if method == "satpa_agreement":
+            prototypes = normalize(
+                (1.0 - alpha_source - alpha_target) * text_ensemble
+                + alpha_source * source
+                + alpha_target * target
+            )
+        else:
+            prototypes, fusion_diagnostics = adaptive_prototype_fusion(
+                text_ensemble,
+                source,
+                target,
+                reliability,
+                source_weight_min=adaptive_source_min,
+                source_weight_max=adaptive_source_max,
+                target_weight_max=adaptive_target_max,
+            )
+            diagnostics.update(fusion_diagnostics)
     else:
         raise ValueError(f"Unknown method: {method}")
     return MethodOutput(classify(target_features, prototypes), prototypes, diagnostics)

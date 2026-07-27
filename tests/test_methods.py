@@ -41,6 +41,19 @@ class MethodTests(unittest.TestCase):
             output = run_method(method, self.source, self.labels, self.target, self.text, self.per_prompt)
             np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
 
+    def test_agreement_variants_are_valid(self):
+        for method in ("satpa_agreement", "adaptive_satpa"):
+            output = run_method(method, self.source, self.labels, self.target, self.text, self.per_prompt)
+            np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
+            self.assertIn("acceptance_rate", output.diagnostics)
+
+    def test_adaptive_weights_are_bounded(self):
+        output = run_method("adaptive_satpa", self.source, self.labels, self.target, self.text, self.per_prompt)
+        self.assertGreaterEqual(output.diagnostics["min_source_weight"], 0.05 - 1e-7)
+        self.assertLessEqual(output.diagnostics["max_source_weight"], 0.30 + 1e-7)
+        self.assertGreaterEqual(output.diagnostics["min_target_weight"], 0.0)
+        self.assertLessEqual(output.diagnostics["max_target_weight"], 0.10 + 1e-7)
+
 
 
 
