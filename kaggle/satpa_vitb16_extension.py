@@ -6,6 +6,14 @@ import subprocess
 import sys
 from pathlib import Path
 
+gpu_names = subprocess.check_output(
+    ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True
+)
+if "P100" in gpu_names:
+    subprocess.check_call([
+        sys.executable, "-m", "pip", "install", "-q", "--index-url",
+        "https://download.pytorch.org/whl/cu124", "torch==2.6.0", "torchvision==0.21.0",
+    ])
 subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "open_clip_torch==2.26.1"])
 
 import numpy as np
@@ -26,15 +34,30 @@ PROMPTS = (
     "an image of a {}.", "a close-up photo of a {}.",
 )
 EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tif", ".tiff"}
-JOBS = [
-    ("office31_amazon", "/kaggle/input/office31/Office-31/amazon"),
-    ("office31_dslr", "/kaggle/input/office31/Office-31/dslr"),
-    ("office31_webcam", "/kaggle/input/office31/Office-31/webcam"),
-    ("officehome_art", "/kaggle/input/home-office-dataset/OfficeHomeDataset_10072016/Art"),
-    ("officehome_clipart", "/kaggle/input/home-office-dataset/OfficeHomeDataset_10072016/Clipart"),
-    ("officehome_product", "/kaggle/input/home-office-dataset/OfficeHomeDataset_10072016/Product"),
-    ("officehome_real_world", "/kaggle/input/home-office-dataset/OfficeHomeDataset_10072016/Real World"),
-]
+
+
+def find_domain_parent(domain_names):
+    input_root = Path("/kaggle/input")
+    for first in input_root.rglob(domain_names[0]):
+        if first.is_dir() and all((first.parent / name).is_dir() for name in domain_names):
+            return first.parent
+    raise FileNotFoundError(f"Could not locate domains {domain_names} below {input_root}")
+
+
+def resolve_jobs():
+    office31 = find_domain_parent(("amazon", "dslr", "webcam"))
+    officehome = find_domain_parent(("Art", "Clipart", "Product", "Real World"))
+    print("Office-31 root:", office31)
+    print("Office-Home root:", officehome)
+    return [
+        ("office31_amazon", str(office31 / "amazon")),
+        ("office31_dslr", str(office31 / "dslr")),
+        ("office31_webcam", str(office31 / "webcam")),
+        ("officehome_art", str(officehome / "Art")),
+        ("officehome_clipart", str(officehome / "Clipart")),
+        ("officehome_product", str(officehome / "Product")),
+        ("officehome_real_world", str(officehome / "Real World")),
+    ]
 
 
 class DomainDataset(Dataset):
@@ -175,6 +198,7 @@ def evaluate_benchmark(name, tasks):
 
 
 gpu_count = max(1, torch.cuda.device_count())
+JOBS = resolve_jobs()
 if gpu_count >= 2:
     assignments = [JOBS[:3] + [JOBS[5]], [JOBS[3], JOBS[4], JOBS[6]]]
     mp.start_processes(extract_worker, args=(2, assignments), nprocs=2, join=True, start_method="fork")
@@ -192,4 +216,3 @@ summary = pd.concat([o31, oh]).groupby(["benchmark","method"])[["accuracy","macr
 summary.to_csv(WORK / "vitb16_summary.csv", index=False)
 print(summary.to_string(index=False))
 subprocess.check_call(["zip", "-qr", "/kaggle/working/satpa_vitb16_outputs.zip", str(WORK)])
-
