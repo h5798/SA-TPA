@@ -76,6 +76,7 @@ def main(args):
         predictions=output.probabilities.argmax(1).astype(np.int16),
     )
     metadata = {
+        "run_tag": args.run_tag,
         "task": args.task,
         "method": args.method,
         "source_features": str(Path(args.source_features).resolve()),
@@ -110,6 +111,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", required=True)
+    parser.add_argument("--run-tag", default="main")
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "no_source_anchor", "satpa"
     ))
