@@ -36,6 +36,12 @@ class MethodTests(unittest.TestCase):
         )
         self.assertTrue(np.isfinite(output.probabilities).all())
 
+    def test_additional_baselines_are_valid(self):
+        for method in ("t3a", "tip_adapter_source"):
+            output = run_method(method, self.source, self.labels, self.target, self.text, self.per_prompt)
+            np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
+
+
 
 
 if __name__ == "__main__":

@@ -64,6 +64,9 @@ def main(args):
         confidence_threshold=args.confidence_threshold,
         top_k=args.top_k,
         class_prior_strength=args.class_prior_strength,
+        t3a_filter_k=args.t3a_filter_k,
+        tip_alpha=args.tip_alpha,
+        tip_beta=args.tip_beta,
     )
     elapsed = time.perf_counter() - start
 
@@ -89,6 +92,9 @@ def main(args):
         "confidence_threshold": args.confidence_threshold,
         "top_k": args.top_k,
         "class_prior_strength": args.class_prior_strength,
+        "t3a_filter_k": args.t3a_filter_k,
+        "tip_alpha": args.tip_alpha,
+        "tip_beta": args.tip_beta,
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
@@ -114,7 +120,7 @@ if __name__ == "__main__":
     parser.add_argument("--run-tag", default="main")
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
-        "no_source_anchor", "satpa_no_uncertainty", "satpa"
+        "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)
@@ -126,4 +132,7 @@ if __name__ == "__main__":
     parser.add_argument("--confidence-threshold", type=float, default=0.7)
     parser.add_argument("--top-k", type=int, default=1)
     parser.add_argument("--class-prior-strength", type=float, default=0.1)
+    parser.add_argument("--t3a-filter-k", type=int, default=5)
+    parser.add_argument("--tip-alpha", type=float, default=1.0)
+    parser.add_argument("--tip-beta", type=float, default=5.0)
     main(parser.parse_args())

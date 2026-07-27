@@ -1,0 +1,6 @@
+t3a:
+  filter_k: 5
+tip_adapter_source:
+  alpha: 1.0
+  beta: 5.0
+

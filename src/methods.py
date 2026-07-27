@@ -29,6 +29,39 @@ def source_prototypes(features: np.ndarray, labels: np.ndarray, text: np.ndarray
     return normalize(np.stack(prototypes))
 
 
+def t3a_prototypes(features: np.ndarray, text: np.ndarray, filter_k: int = 5) -> np.ndarray:
+    probabilities = classify(features, text)
+    pseudo_labels = probabilities.argmax(1)
+    entropy = -(probabilities * np.log(np.clip(probabilities, 1e-12, 1.0))).sum(1)
+    prototypes = []
+    for class_index in range(len(text)):
+        candidates = np.flatnonzero(pseudo_labels == class_index)
+        if len(candidates):
+            selected = candidates[np.argsort(entropy[candidates])[:filter_k]]
+            support = np.concatenate([text[class_index][None, :], features[selected]], axis=0)
+            prototypes.append(normalize(support.mean(0, keepdims=True))[0])
+        else:
+            prototypes.append(text[class_index])
+    return normalize(np.stack(prototypes))
+
+
+def tip_adapter_probabilities(
+    source_features: np.ndarray,
+    source_labels: np.ndarray,
+    target_features: np.ndarray,
+    text: np.ndarray,
+    alpha: float = 1.0,
+    beta: float = 5.0,
+) -> np.ndarray:
+    source_features = normalize(source_features)
+    target_features = normalize(target_features)
+    clip_logits = 100.0 * target_features @ normalize(text).T
+    affinity = target_features @ source_features.T
+    cache_values = np.eye(len(text), dtype=np.float32)[source_labels]
+    cache_logits = np.exp(beta * (affinity - 1.0)) @ cache_values
+    return softmax(clip_logits + alpha * cache_logits)
+
+
 def _uncertainty_weights(probabilities: np.ndarray) -> np.ndarray:
     ordered = np.sort(probabilities, axis=1)
     confidence = ordered[:, -1]
@@ -97,6 +130,9 @@ def run_method(
     confidence_threshold: float = 0.7,
     top_k: int = 1,
     class_prior_strength: float = 0.1,
+    t3a_filter_k: int = 5,
+    tip_alpha: float = 1.0,
+    tip_beta: float = 5.0,
 ) -> MethodOutput:
     text_ensemble = normalize(text_ensemble)
     source = source_prototypes(source_features, source_labels, text_ensemble)
@@ -108,6 +144,13 @@ def run_method(
         prototypes = text_ensemble
     elif method == "source_prototype":
         prototypes = source
+    elif method == "t3a":
+        prototypes = t3a_prototypes(target_features, text_ensemble, t3a_filter_k)
+    elif method == "tip_adapter_source":
+        probabilities = tip_adapter_probabilities(
+            source_features, source_labels, target_features, text_ensemble, tip_alpha, tip_beta
+        )
+        return MethodOutput(probabilities, text_ensemble, diagnostics)
     elif method == "source_anchored_text":
         prototypes = normalize((1.0 - alpha_source) * text_ensemble + alpha_source * source)
     elif method in {"satpa", "no_source_anchor", "satpa_no_uncertainty"}:
