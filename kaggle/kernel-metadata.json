@@ -1,0 +1,16 @@
+{
+  "id": "hrwhrw/sa-tpa-vit-b16-extension",
+  "title": "SA-TPA ViT-B16 Extension",
+  "code_file": "satpa_vitb16_extension.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "xixuhu/office31",
+    "karntiwari/home-office-dataset"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

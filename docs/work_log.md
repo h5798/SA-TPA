@@ -45,3 +45,29 @@
   tri-prototype 84.025%. Removing uncertainty weighting reduced accuracy by only 0.066 point,
   so uncertainty remains an auxiliary component rather than the primary claim.
 - Locked the original parameters for Office-Home before inspecting any Office-Home metric.
+
+## 2026-07-27 — Office-Home confirmation and additional baselines
+
+- Completed all 12 locked Office-Home tasks. SA-TPA averaged 80.897%, improving over single-prompt
+  CLIP by 1.785 points and over the four-prompt ensemble by 0.821 point. Every task improved over
+  both CLIP baselines.
+- SA-TPA improved over `alpha_source = 0` by 0.423 point on average; one task declined by 0.330,
+  one tied, and ten improved. The source anchor therefore has positive but nonuniform value.
+- Mean ECE improved from 0.0275 for prompt ensemble to 0.0187 for SA-TPA.
+- T3A averaged 84.612% on Office-31 but only 74.181% on Office-Home. The source-cache baseline
+  averaged 78.168% and 65.018%, respectively.
+- Audited DPA and DPE official code. Neither directly supports the Office benchmarks, and unchanged
+  DPA selects the best epoch using labeled test accuracy; official-code numbers are therefore not
+  treated as protocol-compatible results.
+- Completed 5,000-repetition paired hierarchical bootstrap checks. On Office-Home, SA-TPA versus
+  prompt ensemble was +0.821 points with 95% CI [0.498, 1.135], and versus no-source-anchor was
+  +0.423 points with 95% CI [0.103, 0.732].
+- On Office-31, SA-TPA versus prompt ensemble was +1.545 points with 95% CI [0.617, 2.653]; its
+  -0.586 difference from T3A was not statistically resolved (95% CI [-3.112, 1.548]).
+- Checked five source/target sample permutations for every task. Across 90 shuffled runs there
+  were zero prediction changes; maximum floating-point probability drift was below 3.4e-6.
+- On representative Office-31/Office-Home tasks, SA-TPA median closed-form adaptation time was
+  144/284 ms and measured peak Python/NumPy allocation was 11.6/19.1 MB. It uses no trainable
+  parameters and no backpropagation.
+- Created and launched the private Kaggle notebook `hrwhrw/sa-tpa-vit-b16-extension` for the
+  ViT-B/16 extension. It automatically splits domain extraction across two GPUs when available.
