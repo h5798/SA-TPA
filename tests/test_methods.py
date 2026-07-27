@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.methods import classify, normalize, run_method
+from src.methods import classify, normalize, run_method, sinkhorn_transport
 
 
 class MethodTests(unittest.TestCase):
@@ -62,6 +62,23 @@ class MethodTests(unittest.TestCase):
         np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
         self.assertGreaterEqual(output.diagnostics["rounds_completed"], 1)
         self.assertLessEqual(output.diagnostics["rounds_completed"], 3)
+
+    def test_sinkhorn_matches_marginals(self):
+        cost = np.asarray([[0.1, 0.9], [0.8, 0.2], [0.4, 0.5]], dtype=np.float64)
+        mu = np.asarray([0.2, 0.3, 0.5])
+        nu = np.asarray([0.6, 0.4])
+        plan, diagnostics = sinkhorn_transport(cost, mu, nu, epsilon=0.05, max_iter=500)
+        np.testing.assert_allclose(plan.sum(1), mu, atol=1e-6)
+        np.testing.assert_allclose(plan.sum(0), nu, atol=1e-6)
+        self.assertLessEqual(diagnostics["ot_column_marginal_error"], 1e-7)
+
+    def test_spt_sa_is_valid(self):
+        output = run_method("spt_sa", self.source, self.labels, self.target, self.text, self.per_prompt)
+        np.testing.assert_allclose(output.probabilities.sum(1), 1.0, atol=1e-6)
+        self.assertTrue(np.isfinite(output.probabilities).all())
+        self.assertGreater(output.diagnostics["ot_min_effective_size"], 0.0)
+        self.assertGreaterEqual(output.diagnostics["ot_classes_ess_below_3"], 0)
+        self.assertLessEqual(output.diagnostics["ot_classes_ess_below_3"], 3)
 
 
 

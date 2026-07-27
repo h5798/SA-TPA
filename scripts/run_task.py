@@ -73,6 +73,10 @@ def main(args):
         adaptive_source_max=args.adaptive_source_max,
         adaptive_target_max=args.adaptive_target_max,
         target_update_steps=args.target_update_steps,
+        ot_epsilon=args.ot_epsilon,
+        ot_max_iter=args.ot_max_iter,
+        ot_tolerance=args.ot_tolerance,
+        ot_prior_mix=args.ot_prior_mix,
     )
     elapsed = time.perf_counter() - start
 
@@ -107,6 +111,10 @@ def main(args):
         "adaptive_source_max": args.adaptive_source_max,
         "adaptive_target_max": args.adaptive_target_max,
         "target_update_steps": args.target_update_steps,
+        "ot_epsilon": args.ot_epsilon,
+        "ot_max_iter": args.ot_max_iter,
+        "ot_tolerance": args.ot_tolerance,
+        "ot_prior_mix": args.ot_prior_mix,
         "runtime_seconds": elapsed,
         "target_labels_used_for_adaptation_or_selection": False,
         "target_labels_used_only_for_final_reporting": True,
@@ -128,6 +136,17 @@ def main(args):
         "last_label_change_rate": None,
         "final_mean_confidence": None,
         "stopped_reason": None,
+        "ot_iterations": None,
+        "ot_row_marginal_error": None,
+        "ot_column_marginal_error": None,
+        "ot_min_class_prior": None,
+        "ot_max_class_prior": None,
+        "ot_min_effective_size": None,
+        "ot_mean_effective_size": None,
+        "ot_max_effective_size": None,
+        "ot_classes_ess_below_3": None,
+        "ot_min_top1_count": None,
+        "ot_classes_without_top1": None,
         **output.diagnostics,
     }
     prediction_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
@@ -147,7 +166,7 @@ if __name__ == "__main__":
     parser.add_argument("--method", required=True, choices=(
         "clip_zero_shot", "prompt_ensemble", "source_prototype", "source_anchored_text",
         "t3a", "tip_adapter_source", "no_source_anchor", "satpa_no_uncertainty", "satpa",
-        "satpa_agreement", "adaptive_satpa", "iterative_satpa"
+        "satpa_agreement", "adaptive_satpa", "iterative_satpa", "spt_sa"
     ))
     parser.add_argument("--source-features", required=True)
     parser.add_argument("--target-features", required=True)
@@ -168,4 +187,8 @@ if __name__ == "__main__":
     parser.add_argument("--adaptive-source-max", type=float, default=0.30)
     parser.add_argument("--adaptive-target-max", type=float, default=0.10)
     parser.add_argument("--target-update-steps", type=int, default=1)
+    parser.add_argument("--ot-epsilon", type=float, default=0.05)
+    parser.add_argument("--ot-max-iter", type=int, default=200)
+    parser.add_argument("--ot-tolerance", type=float, default=1e-7)
+    parser.add_argument("--ot-prior-mix", type=float, default=0.5)
     main(parser.parse_args())
