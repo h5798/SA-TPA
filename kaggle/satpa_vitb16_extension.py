@@ -5,6 +5,8 @@ import os
 import re
 import subprocess
 import sys
+import urllib.request
+import zipfile
 from pathlib import Path
 
 gpu_names = subprocess.check_output(
@@ -45,9 +47,9 @@ def find_domain_parent(domain_names):
     raise FileNotFoundError(f"Could not locate domains {domain_names} below {input_root}")
 
 
-def find_normalized_domains(domain_names):
+def find_normalized_domains(domain_names, input_root=Path("/kaggle/input")):
     wanted = {re.sub(r"[^a-z0-9]", "", name.lower()): name for name in domain_names}
-    for art in Path("/kaggle/input").rglob("*"):
+    for art in input_root.rglob("*"):
         if not art.is_dir() or re.sub(r"[^a-z0-9]", "", art.name.lower()) != "art":
             continue
         children = {
@@ -59,9 +61,29 @@ def find_normalized_domains(domain_names):
     raise FileNotFoundError(f"Could not locate normalized domains {domain_names}")
 
 
+def download_officehome_fallback():
+    archive = WORK / "officehome.zip"
+    extracted = WORK / "officehome_download"
+    if not extracted.exists():
+        print("Office-Home mount missing; downloading public Kaggle dataset fallback")
+        urllib.request.urlretrieve(
+            "https://www.kaggle.com/api/v1/datasets/download/karntiwari/home-office-dataset",
+            archive,
+        )
+        extracted.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(archive) as handle:
+            handle.extractall(extracted)
+    return extracted
+
+
 def resolve_jobs():
     office31 = find_domain_parent(("amazon", "dslr", "webcam"))
-    officehome = find_normalized_domains(("Art", "Clipart", "Product", "Real World"))
+    try:
+        officehome = find_normalized_domains(("Art", "Clipart", "Product", "Real World"))
+    except FileNotFoundError:
+        officehome = find_normalized_domains(
+            ("Art", "Clipart", "Product", "Real World"), download_officehome_fallback()
+        )
     print("Office-31 root:", office31)
     print("Office-Home domains:", officehome)
     return [
