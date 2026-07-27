@@ -1,0 +1,6 @@
+﻿Extension,Scope,Reference,Candidate,Delta,Decision
+Class-adaptive fusion (best tau=20),"Office-31, 3 development tasks",84.06668408115151,77.22605117625915,-6.8406329048923595,Reject
+Agreement filtering,"Office-31, 6 tasks",84.02527141943304,84.79983792747295,0.7745665080399107,Not promoted
+Agreement filtering,"Office-Home, 12 tasks",80.8966574817389,80.63405913763766,-0.26259834410123517,Reject cross-dataset
+Iterative update (3 vs 1 rounds),Office-31 A2W,85.66037735849056,85.66037735849056,0.0,Reject
+SPT-SA optimal transport,"Office-31, 3 development tasks",84.06668408115151,83.905399160086,-0.1612849210655014,Reject at gate

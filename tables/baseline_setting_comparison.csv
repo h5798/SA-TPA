@@ -1,0 +1,9 @@
+﻿Method,Source data,Source labels,Target labels for adaptation,Gradient update,Setting,Placement,Qualification
+CLIP Zero-Shot,No,No,No,No,Frozen inference,Main table,Single prompt
+Prompt Ensemble,No,No,No,No,Frozen inference,Main table,Four fixed prompts
+Source Prototype,Yes,Yes,No,No,Source-available UDA,Main table,Closed-form visual prototypes
+T3A,No,No,No,No,Protocol-compatible batch adaptation,Main table,Project implementation; not official reproduction
+Tip-Adapter source cache,Yes,Yes,No,No,Protocol-compatible source cache,Main table,Project implementation; not official reproduction
+SA-TPA,Yes,Yes,No,No,Source-available UDA,Main table,Fixed tri-prototype fusion
+DPA,No,No,No,Yes,Source-free adaptation,Setting comparison,Official code lacks Office configs and reports best target-test epoch
+DPE,No,No,No,Yes,Online TTA,Setting comparison,Optimizes prototype residuals; different protocol

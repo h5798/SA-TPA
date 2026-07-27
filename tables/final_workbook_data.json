@@ -1,0 +1,844 @@
+{
+  "office31_main": {
+    "columns": [
+      "Method",
+      "A2W",
+      "D2W",
+      "W2A",
+      "A2D",
+      "D2A",
+      "W2D",
+      "Mean"
+    ],
+    "records": [
+      {
+        "Method": "CLIP Zero-Shot",
+        "A2W": 82.0125786163522,
+        "D2W": 82.0125786163522,
+        "W2A": 78.62974795882144,
+        "A2D": 83.73493975903614,
+        "D2A": 78.62974795882144,
+        "W2D": 83.73493975903614,
+        "Mean": 81.45908877806993
+      },
+      {
+        "Method": "Prompt Ensemble",
+        "A2W": 83.39622641509435,
+        "D2W": 83.39622641509435,
+        "W2A": 80.5111821086262,
+        "A2D": 83.53413654618474,
+        "D2A": 80.5111821086262,
+        "W2D": 83.53413654618474,
+        "Mean": 82.48051502330176
+      },
+      {
+        "Method": "Source Prototype",
+        "A2W": 74.46540880503144,
+        "D2W": 93.8364779874214,
+        "W2A": 68.26411075612353,
+        "A2D": 74.49799196787149,
+        "D2A": 67.48313809016683,
+        "W2D": 95.58232931726909,
+        "Mean": 79.02157615398063
+      },
+      {
+        "Method": "T3A (protocol-compatible)",
+        "A2W": 84.0251572327044,
+        "D2W": 84.0251572327044,
+        "W2A": 80.65317713880015,
+        "A2D": 89.1566265060241,
+        "D2A": 80.65317713880015,
+        "W2D": 89.1566265060241,
+        "Mean": 84.61165362584288
+      },
+      {
+        "Method": "Tip-Adapter source cache",
+        "A2W": 79.87421383647799,
+        "D2W": 80.75471698113208,
+        "W2A": 72.87894923677672,
+        "A2D": 77.10843373493977,
+        "D2A": 75.86084487042953,
+        "W2D": 82.53012048192771,
+        "Mean": 78.16787985694731
+      },
+      {
+        "Method": "SA-TPA",
+        "A2W": 84.65408805031447,
+        "D2W": 86.28930817610063,
+        "W2A": 81.2566560170394,
+        "A2D": 84.13654618473896,
+        "D2A": 81.46964856230032,
+        "W2D": 86.34538152610442,
+        "Mean": 84.02527141943304
+      }
+    ]
+  },
+  "officehome_main": {
+    "columns": [
+      "Method",
+      "A2C",
+      "A2P",
+      "A2R",
+      "C2A",
+      "C2P",
+      "C2R",
+      "P2A",
+      "P2C",
+      "P2R",
+      "R2A",
+      "R2C",
+      "R2P",
+      "Mean"
+    ],
+    "records": [
+      {
+        "Method": "CLIP Zero-Shot",
+        "A2C": 64.78808705612829,
+        "A2P": 86.50596981302095,
+        "A2R": 87.23892586642185,
+        "C2A": 77.91512154923774,
+        "C2P": 86.50596981302095,
+        "C2R": 87.23892586642185,
+        "P2A": 77.91512154923774,
+        "P2C": 64.78808705612829,
+        "P2R": 87.23892586642185,
+        "R2A": 77.91512154923774,
+        "R2C": 64.78808705612829,
+        "R2P": 86.50596981302095,
+        "Mean": 79.1120260712022
+      },
+      {
+        "Method": "Prompt Ensemble",
+        "A2C": 66.27720504009163,
+        "A2P": 87.36201847262896,
+        "A2R": 87.8815698875373,
+        "C2A": 78.78038730943551,
+        "C2P": 87.36201847262896,
+        "C2R": 87.8815698875373,
+        "P2A": 78.78038730943551,
+        "P2C": 66.27720504009163,
+        "P2R": 87.8815698875373,
+        "R2A": 78.78038730943551,
+        "R2C": 66.27720504009163,
+        "R2P": 87.36201847262896,
+        "Mean": 80.07529517742336
+      },
+      {
+        "Method": "Source Prototype",
+        "A2C": 45.84192439862543,
+        "A2P": 60.68934444694752,
+        "A2R": 70.78264861142989,
+        "C2A": 67.57313555830244,
+        "C2P": 67.65037170533904,
+        "C2R": 73.90406242827635,
+        "P2A": 54.55294602389782,
+        "P2C": 47.0332187857961,
+        "P2R": 78.74684415882489,
+        "R2A": 65.47177585496497,
+        "R2C": 48.957617411225655,
+        "R2P": 79.2971389952692,
+        "Mean": 63.37508569824161
+      },
+      {
+        "Method": "T3A (protocol-compatible)",
+        "A2C": 59.01489117983964,
+        "A2P": 86.46091462041,
+        "A2R": 81.6157906816617,
+        "C2A": 69.6332921302019,
+        "C2P": 86.46091462041,
+        "C2R": 81.6157906816617,
+        "P2A": 69.6332921302019,
+        "P2C": 59.01489117983964,
+        "P2R": 81.6157906816617,
+        "R2A": 69.6332921302019,
+        "R2C": 59.01489117983964,
+        "R2P": 86.46091462041,
+        "Mean": 74.1812221530283
+      },
+      {
+        "Method": "Tip-Adapter source cache",
+        "A2C": 44.58190148911799,
+        "A2P": 76.2559134940302,
+        "A2R": 71.65480835437228,
+        "C2A": 56.36588380716935,
+        "C2P": 67.22234737553504,
+        "C2R": 65.27427128758319,
+        "P2A": 65.96621343222084,
+        "P2C": 52.9667812142039,
+        "P2R": 75.30410833142071,
+        "R2A": 70.7457766790276,
+        "R2C": 56.40320733104238,
+        "R2P": 77.4724036945258,
+        "Mean": 65.01780137418744
+      },
+      {
+        "Method": "SA-TPA",
+        "A2C": 66.68957617411225,
+        "A2P": 87.99279116918225,
+        "A2R": 88.73077805829699,
+        "C2A": 79.68685620107128,
+        "C2P": 87.92520838026583,
+        "C2R": 88.96029378012393,
+        "P2A": 78.90399670374948,
+        "P2C": 67.90378006872852,
+        "P2R": 89.18980950195088,
+        "R2A": 79.48084054388134,
+        "R2C": 67.0103092783505,
+        "R2P": 88.28564992115341,
+        "Mean": 80.8966574817389
+      }
+    ]
+  },
+  "backbone_comparison": {
+    "columns": [
+      "Benchmark",
+      "Method",
+      "ViT-B/16",
+      "ViT-B/32",
+      "B16 - B32"
+    ],
+    "records": [
+      {
+        "Benchmark": "office31",
+        "Method": "CLIP Zero-Shot",
+        "ViT-B/16": 79.03284378833207,
+        "ViT-B/32": 81.45908877806993,
+        "B16 - B32": -2.426244989737853
+      },
+      {
+        "Benchmark": "office31",
+        "Method": "Prompt Ensemble",
+        "ViT-B/16": 82.90980413169817,
+        "ViT-B/32": 82.48051502330176,
+        "B16 - B32": 0.42928910839640366
+      },
+      {
+        "Benchmark": "office31",
+        "Method": "SA-TPA",
+        "ViT-B/16": 85.05216854047222,
+        "ViT-B/32": 84.02527141943304,
+        "B16 - B32": 1.026897121039184
+      },
+      {
+        "Benchmark": "office31",
+        "Method": "Text + Target",
+        "ViT-B/16": 83.0761791716467,
+        "ViT-B/32": 82.98866129819578,
+        "B16 - B32": 0.08751787345092055
+      },
+      {
+        "Benchmark": "officehome",
+        "Method": "CLIP Zero-Shot",
+        "ViT-B/16": 82.25783604812828,
+        "ViT-B/32": 79.11202607120221,
+        "B16 - B32": 3.145809976926074
+      },
+      {
+        "Benchmark": "officehome",
+        "Method": "Prompt Ensemble",
+        "ViT-B/16": 83.30819863522721,
+        "ViT-B/32": 80.07529517742336,
+        "B16 - B32": 3.2329034578038573
+      },
+      {
+        "Benchmark": "officehome",
+        "Method": "SA-TPA",
+        "ViT-B/16": 84.19044126081448,
+        "ViT-B/32": 80.8966574817389,
+        "B16 - B32": 3.293783779075582
+      },
+      {
+        "Benchmark": "officehome",
+        "Method": "Text + Target",
+        "ViT-B/16": 83.72033323204539,
+        "ViT-B/32": 80.47350725236636,
+        "B16 - B32": 3.2468259796790306
+      }
+    ]
+  },
+  "ablation_summary": {
+    "columns": [
+      "Method",
+      "Text",
+      "Source anchor",
+      "Target prototype",
+      "Uncertainty",
+      "Office-31",
+      "Office-Home"
+    ],
+    "records": [
+      {
+        "Method": "Prompt Ensemble",
+        "Text": "Yes",
+        "Source anchor": "No",
+        "Target prototype": "No",
+        "Uncertainty": "No",
+        "Office-31": 82.48051502330176,
+        "Office-Home": 80.07529517742336
+      },
+      {
+        "Method": "Text + Source",
+        "Text": "Yes",
+        "Source anchor": "Yes",
+        "Target prototype": "No",
+        "Uncertainty": "No",
+        "Office-31": 83.49176237572308,
+        "Office-Home": 80.67241435465446
+      },
+      {
+        "Method": "Text + Target",
+        "Text": "Yes",
+        "Source anchor": "No",
+        "Target prototype": "Yes",
+        "Uncertainty": "Yes",
+        "Office-31": 82.98866129819578,
+        "Office-Home": 80.47350725236636
+      },
+      {
+        "Method": "SA-TPA w/o uncertainty",
+        "Text": "Yes",
+        "Source anchor": "Yes",
+        "Target prototype": "Yes",
+        "Uncertainty": "No",
+        "Office-31": 83.95900693752296,
+        "Office-Home": 80.90577961616893
+      },
+      {
+        "Method": "SA-TPA",
+        "Text": "Yes",
+        "Source anchor": "Yes",
+        "Target prototype": "Yes",
+        "Uncertainty": "Yes",
+        "Office-31": 84.02527141943304,
+        "Office-Home": 80.8966574817389
+      }
+    ]
+  },
+  "sensitivity_summary": {
+    "columns": [
+      "Parameter",
+      "Value",
+      "Mean accuracy",
+      "Mean ECE",
+      "Worst-task accuracy"
+    ],
+    "records": [
+      {
+        "Parameter": "alpha_source",
+        "Value": 0.0,
+        "Mean accuracy": 82.98866129819578,
+        "Mean ECE": 0.04186845082182683,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "alpha_source",
+        "Value": 0.05,
+        "Mean accuracy": 83.59249860709676,
+        "Mean ECE": 0.043097454611121966,
+        "Worst-task accuracy": 81.07916222932198
+      },
+      {
+        "Parameter": "alpha_source",
+        "Value": 0.1,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.04799778926490525,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "alpha_source",
+        "Value": 0.2,
+        "Mean accuracy": 84.70041975256638,
+        "Mean ECE": 0.053570817246513774,
+        "Worst-task accuracy": 80.86616968406106
+      },
+      {
+        "Parameter": "alpha_source",
+        "Value": 0.3,
+        "Mean accuracy": 84.63431236146789,
+        "Mean ECE": 0.05564790987720893,
+        "Worst-task accuracy": 80.0141995030174
+      },
+      {
+        "Parameter": "alpha_target",
+        "Value": 0.0,
+        "Mean accuracy": 83.49176237572308,
+        "Mean ECE": 0.0417817948186584,
+        "Worst-task accuracy": 80.65317713880015
+      },
+      {
+        "Parameter": "alpha_target",
+        "Value": 0.01,
+        "Mean accuracy": 83.65523527052396,
+        "Mean ECE": 0.04389868930188667,
+        "Worst-task accuracy": 81.04366347177849
+      },
+      {
+        "Parameter": "alpha_target",
+        "Value": 0.025,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.04799778926490525,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "alpha_target",
+        "Value": 0.05,
+        "Mean accuracy": 84.26414023754982,
+        "Mean ECE": 0.05147693949258791,
+        "Worst-task accuracy": 81.64714235001776
+      },
+      {
+        "Parameter": "alpha_target",
+        "Value": 0.1,
+        "Mean accuracy": 84.82113691300793,
+        "Mean ECE": 0.05693259401301851,
+        "Worst-task accuracy": 81.96663116790913
+      },
+      {
+        "Parameter": "class_prior_strength",
+        "Value": 0.0,
+        "Mean accuracy": 83.99180421729113,
+        "Mean ECE": 0.048482211288181115,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "class_prior_strength",
+        "Value": 0.05,
+        "Mean accuracy": 83.99180421729113,
+        "Mean ECE": 0.04858793008953608,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "class_prior_strength",
+        "Value": 0.1,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.04799778926490525,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "class_prior_strength",
+        "Value": 0.2,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.048293388294271565,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "confidence_threshold",
+        "Value": 0.5,
+        "Mean accuracy": 84.01935495984246,
+        "Mean ECE": 0.04753805722342008,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "confidence_threshold",
+        "Value": 0.6,
+        "Mean accuracy": 83.98588775770055,
+        "Mean ECE": 0.04754792618906715,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "confidence_threshold",
+        "Value": 0.7,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.04799778926490525,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "confidence_threshold",
+        "Value": 0.8,
+        "Mean accuracy": 83.99247413966488,
+        "Mean ECE": 0.04818498812210017,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "confidence_threshold",
+        "Value": 0.9,
+        "Mean accuracy": 82.19029687715572,
+        "Mean ECE": 0.05291702788381303,
+        "Worst-task accuracy": 80.50314465408806
+      },
+      {
+        "Parameter": "top_k",
+        "Value": 1.0,
+        "Mean accuracy": 84.02527141943304,
+        "Mean ECE": 0.04799778926490525,
+        "Worst-task accuracy": 81.2566560170394
+      },
+      {
+        "Parameter": "top_k",
+        "Value": 2.0,
+        "Mean accuracy": 83.97472476089312,
+        "Mean ECE": 0.04433268801940748,
+        "Worst-task accuracy": 81.18565850195243
+      },
+      {
+        "Parameter": "top_k",
+        "Value": 4.0,
+        "Mean accuracy": 83.93279603971912,
+        "Mean ECE": 0.04402412477946325,
+        "Worst-task accuracy": 81.18565850195243
+      },
+      {
+        "Parameter": "top_k",
+        "Value": 8.0,
+        "Mean accuracy": 83.92096312053796,
+        "Mean ECE": 0.043550809181539835,
+        "Worst-task accuracy": 81.18565850195243
+      }
+    ]
+  },
+  "efficiency_summary": {
+    "columns": [
+      "Benchmark",
+      "Representative task",
+      "Method",
+      "Median latency (ms)",
+      "P95 latency (ms)",
+      "Peak host allocation (MB)",
+      "Backpropagation",
+      "Trainable parameters"
+    ],
+    "records": [
+      {
+        "Benchmark": "office31",
+        "Representative task": "W2A",
+        "Method": "Prompt Ensemble",
+        "Median latency (ms)": 11.90719999999995,
+        "P95 latency (ms)": 13.2042,
+        "Peak host allocation (MB)": 11.126298904418944,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "office31",
+        "Representative task": "W2A",
+        "Method": "T3A (protocol-compatible)",
+        "Median latency (ms)": 26.60775000000004,
+        "P95 latency (ms)": 33.593899999999955,
+        "Peak host allocation (MB)": 11.189970016479492,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "office31",
+        "Representative task": "W2A",
+        "Method": "Tip-Adapter source cache",
+        "Median latency (ms)": 32.5226500000001,
+        "P95 latency (ms)": 38.38770000000014,
+        "Peak host allocation (MB)": 33.233428955078125,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "office31",
+        "Representative task": "W2A",
+        "Method": "Text + Target",
+        "Median latency (ms)": 131.17530000000068,
+        "P95 latency (ms)": 161.03500000000005,
+        "Peak host allocation (MB)": 11.641162872314451,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "office31",
+        "Representative task": "W2A",
+        "Method": "SA-TPA",
+        "Median latency (ms)": 143.67335000000026,
+        "P95 latency (ms)": 198.64809999999977,
+        "Peak host allocation (MB)": 11.641162872314451,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "officehome",
+        "Representative task": "C2P",
+        "Method": "Prompt Ensemble",
+        "Median latency (ms)": 24.44770000000001,
+        "P95 latency (ms)": 31.12250000000005,
+        "Peak host allocation (MB)": 17.598240852355957,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "officehome",
+        "Representative task": "C2P",
+        "Method": "T3A (protocol-compatible)",
+        "Median latency (ms)": 54.65760000000009,
+        "P95 latency (ms)": 61.05650000000007,
+        "Peak host allocation (MB)": 17.722808837890625,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "officehome",
+        "Representative task": "C2P",
+        "Method": "Tip-Adapter source cache",
+        "Median latency (ms)": 257.5153499999998,
+        "P95 latency (ms)": 311.02670000000023,
+        "Peak host allocation (MB)": 241.37692260742188,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "officehome",
+        "Representative task": "C2P",
+        "Method": "Text + Target",
+        "Median latency (ms)": 279.78584999999964,
+        "P95 latency (ms)": 296.7004000000006,
+        "Peak host allocation (MB)": 19.076679229736328,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      },
+      {
+        "Benchmark": "officehome",
+        "Representative task": "C2P",
+        "Method": "SA-TPA",
+        "Median latency (ms)": 284.3547500000003,
+        "P95 latency (ms)": 324.58470000000085,
+        "Peak host allocation (MB)": 19.076679229736328,
+        "Backpropagation": false,
+        "Trainable parameters": 0
+      }
+    ]
+  },
+  "clustered_bootstrap": {
+    "columns": [
+      "benchmark",
+      "reference",
+      "comparator",
+      "mean_delta_pp",
+      "conditional_ci_low",
+      "conditional_ci_high",
+      "conditional_p_le_zero",
+      "cluster_ci_low",
+      "cluster_ci_high",
+      "cluster_p_le_zero",
+      "target_domain_clusters"
+    ],
+    "records": [
+      {
+        "benchmark": "office31",
+        "reference": "satpa",
+        "comparator": "prompt_ensemble",
+        "mean_delta_pp": 1.5447563802202542,
+        "conditional_ci_low": 0.9495943240821362,
+        "conditional_ci_high": 2.1693561747670165,
+        "conditional_p_le_zero": 0.0,
+        "cluster_ci_low": 0.7336410080393155,
+        "cluster_ci_high": 2.442104911804199,
+        "cluster_p_le_zero": 0.0,
+        "target_domain_clusters": 3
+      },
+      {
+        "benchmark": "office31",
+        "reference": "satpa",
+        "comparator": "no_source_anchor",
+        "mean_delta_pp": 1.0366100973139207,
+        "conditional_ci_low": 0.4941221999625365,
+        "conditional_ci_high": 1.5955575245432552,
+        "conditional_p_le_zero": 0.0,
+        "cluster_ci_low": 0.0846463575959205,
+        "cluster_ci_high": 1.9497203022241587,
+        "cluster_p_le_zero": 0.0106,
+        "target_domain_clusters": 3
+      },
+      {
+        "benchmark": "office31",
+        "reference": "satpa",
+        "comparator": "t3a",
+        "mean_delta_pp": -0.5863822530955076,
+        "conditional_ci_low": -1.7554702512919904,
+        "conditional_ci_high": 0.6015986849864318,
+        "conditional_p_le_zero": 0.8394,
+        "cluster_ci_low": -3.531235999365648,
+        "cluster_ci_high": 1.928750252226988,
+        "cluster_p_le_zero": 0.6312,
+        "target_domain_clusters": 3
+      },
+      {
+        "benchmark": "officehome",
+        "reference": "satpa",
+        "comparator": "prompt_ensemble",
+        "mean_delta_pp": 0.8213623097011199,
+        "conditional_ci_low": 0.5770577947609127,
+        "conditional_ci_high": 1.0632038962095975,
+        "conditional_p_le_zero": 0.0,
+        "cluster_ci_low": 0.5086667007766664,
+        "cluster_ci_high": 1.124169815704226,
+        "cluster_p_le_zero": 0.0,
+        "target_domain_clusters": 4
+      },
+      {
+        "benchmark": "officehome",
+        "reference": "satpa",
+        "comparator": "no_source_anchor",
+        "mean_delta_pp": 0.4231502282588432,
+        "conditional_ci_low": 0.2112569202203303,
+        "conditional_ci_high": 0.635822996497154,
+        "conditional_p_le_zero": 0.0,
+        "cluster_ci_low": 0.1263851393217919,
+        "cluster_ci_high": 0.7262328291311859,
+        "cluster_p_le_zero": 0.0032,
+        "target_domain_clusters": 4
+      },
+      {
+        "benchmark": "officehome",
+        "reference": "satpa",
+        "comparator": "t3a",
+        "mean_delta_pp": 6.7154353484511375,
+        "conditional_ci_low": 6.133227133750916,
+        "conditional_ci_high": 7.30757917240262,
+        "conditional_p_le_zero": 0.0,
+        "cluster_ci_low": 3.222786039672792,
+        "cluster_ci_high": 9.333150580525398,
+        "cluster_p_le_zero": 0.0,
+        "target_domain_clusters": 4
+      }
+    ]
+  },
+  "design_validation": {
+    "columns": [
+      "Extension",
+      "Scope",
+      "Reference",
+      "Candidate",
+      "Delta",
+      "Decision"
+    ],
+    "records": [
+      {
+        "Extension": "Class-adaptive fusion (best tau=20)",
+        "Scope": "Office-31, 3 development tasks",
+        "Reference": 84.06668408115151,
+        "Candidate": 77.22605117625915,
+        "Delta": -6.8406329048923595,
+        "Decision": "Reject"
+      },
+      {
+        "Extension": "Agreement filtering",
+        "Scope": "Office-31, 6 tasks",
+        "Reference": 84.02527141943304,
+        "Candidate": 84.79983792747295,
+        "Delta": 0.7745665080399107,
+        "Decision": "Not promoted"
+      },
+      {
+        "Extension": "Agreement filtering",
+        "Scope": "Office-Home, 12 tasks",
+        "Reference": 80.8966574817389,
+        "Candidate": 80.63405913763766,
+        "Delta": -0.26259834410123517,
+        "Decision": "Reject cross-dataset"
+      },
+      {
+        "Extension": "Iterative update (3 vs 1 rounds)",
+        "Scope": "Office-31 A2W",
+        "Reference": 85.66037735849056,
+        "Candidate": 85.66037735849056,
+        "Delta": 0.0,
+        "Decision": "Reject"
+      },
+      {
+        "Extension": "SPT-SA optimal transport",
+        "Scope": "Office-31, 3 development tasks",
+        "Reference": 84.06668408115151,
+        "Candidate": 83.905399160086,
+        "Delta": -0.1612849210655014,
+        "Decision": "Reject at gate"
+      }
+    ]
+  },
+  "baseline_setting_comparison": {
+    "columns": [
+      "Method",
+      "Source data",
+      "Source labels",
+      "Target labels for adaptation",
+      "Gradient update",
+      "Setting",
+      "Placement",
+      "Qualification"
+    ],
+    "records": [
+      {
+        "Method": "CLIP Zero-Shot",
+        "Source data": "No",
+        "Source labels": "No",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Frozen inference",
+        "Placement": "Main table",
+        "Qualification": "Single prompt"
+      },
+      {
+        "Method": "Prompt Ensemble",
+        "Source data": "No",
+        "Source labels": "No",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Frozen inference",
+        "Placement": "Main table",
+        "Qualification": "Four fixed prompts"
+      },
+      {
+        "Method": "Source Prototype",
+        "Source data": "Yes",
+        "Source labels": "Yes",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Source-available UDA",
+        "Placement": "Main table",
+        "Qualification": "Closed-form visual prototypes"
+      },
+      {
+        "Method": "T3A",
+        "Source data": "No",
+        "Source labels": "No",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Protocol-compatible batch adaptation",
+        "Placement": "Main table",
+        "Qualification": "Project implementation; not official reproduction"
+      },
+      {
+        "Method": "Tip-Adapter source cache",
+        "Source data": "Yes",
+        "Source labels": "Yes",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Protocol-compatible source cache",
+        "Placement": "Main table",
+        "Qualification": "Project implementation; not official reproduction"
+      },
+      {
+        "Method": "SA-TPA",
+        "Source data": "Yes",
+        "Source labels": "Yes",
+        "Target labels for adaptation": "No",
+        "Gradient update": "No",
+        "Setting": "Source-available UDA",
+        "Placement": "Main table",
+        "Qualification": "Fixed tri-prototype fusion"
+      },
+      {
+        "Method": "DPA",
+        "Source data": "No",
+        "Source labels": "No",
+        "Target labels for adaptation": "No",
+        "Gradient update": "Yes",
+        "Setting": "Source-free adaptation",
+        "Placement": "Setting comparison",
+        "Qualification": "Official code lacks Office configs and reports best target-test epoch"
+      },
+      {
+        "Method": "DPE",
+        "Source data": "No",
+        "Source labels": "No",
+        "Target labels for adaptation": "No",
+        "Gradient update": "Yes",
+        "Setting": "Online TTA",
+        "Placement": "Setting comparison",
+        "Qualification": "Optimizes prototype residuals; different protocol"
+      }
+    ]
+  }
+}

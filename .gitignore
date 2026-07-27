@@ -16,4 +16,7 @@ __pycache__/
 .env
 kaggle.json
 access_token
-
+.artifact_build/
+outputs/final_assets/previews/
+outputs/final_assets/*.inspect.ndjson
+outputs/final_assets/summary_inspection.ndjson

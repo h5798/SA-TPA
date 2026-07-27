@@ -1,0 +1,16 @@
+\begin{tabular}{lllrrrrr}
+\toprule
+Benchmark & Representative task & Method & Median latency (ms) & P95 latency (ms) & Peak host allocation (MB) & Backpropagation & Trainable parameters \\
+\midrule
+office31 & W2A & Prompt Ensemble & 11.907 & 13.204 & 11.126 & False & 0 \\
+office31 & W2A & T3A (protocol-compatible) & 26.608 & 33.594 & 11.190 & False & 0 \\
+office31 & W2A & Tip-Adapter source cache & 32.523 & 38.388 & 33.233 & False & 0 \\
+office31 & W2A & Text + Target & 131.175 & 161.035 & 11.641 & False & 0 \\
+office31 & W2A & SA-TPA & 143.673 & 198.648 & 11.641 & False & 0 \\
+officehome & C2P & Prompt Ensemble & 24.448 & 31.123 & 17.598 & False & 0 \\
+officehome & C2P & T3A (protocol-compatible) & 54.658 & 61.057 & 17.723 & False & 0 \\
+officehome & C2P & Tip-Adapter source cache & 257.515 & 311.027 & 241.377 & False & 0 \\
+officehome & C2P & Text + Target & 279.786 & 296.700 & 19.077 & False & 0 \\
+officehome & C2P & SA-TPA & 284.355 & 324.585 & 19.077 & False & 0 \\
+\bottomrule
+\end{tabular}

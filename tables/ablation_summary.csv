@@ -1,0 +1,6 @@
+﻿Method,Text,Source anchor,Target prototype,Uncertainty,Office-31,Office-Home
+Prompt Ensemble,Yes,No,No,No,82.48051502330176,80.07529517742336
+Text + Source,Yes,Yes,No,No,83.49176237572308,80.67241435465446
+Text + Target,Yes,No,Yes,Yes,82.98866129819578,80.47350725236636
+SA-TPA w/o uncertainty,Yes,Yes,Yes,No,83.95900693752296,80.90577961616893
+SA-TPA,Yes,Yes,Yes,Yes,84.02527141943304,80.8966574817389

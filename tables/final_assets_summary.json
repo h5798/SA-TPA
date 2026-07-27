@@ -1,0 +1,26 @@
+{
+  "tables": {
+    "office31_main": "D:\\456\\project\\tables\\office31_main.csv",
+    "officehome_main": "D:\\456\\project\\tables\\officehome_main.csv",
+    "backbone_comparison": "D:\\456\\project\\tables\\backbone_comparison.csv",
+    "ablation_summary": "D:\\456\\project\\tables\\ablation_summary.csv",
+    "sensitivity_summary": "D:\\456\\project\\tables\\sensitivity_summary.csv",
+    "efficiency_summary": "D:\\456\\project\\tables\\efficiency_summary.csv",
+    "clustered_bootstrap": "D:\\456\\project\\tables\\clustered_bootstrap.csv",
+    "design_validation": "D:\\456\\project\\tables\\design_validation.csv",
+    "baseline_setting_comparison": "D:\\456\\project\\tables\\baseline_setting_comparison.csv"
+  },
+  "figures": [
+    "accuracy_latency_tradeoff.png",
+    "main_results_mean_accuracy.png",
+    "parameter_sensitivity.png",
+    "satpa_method_overview.png",
+    "task_level_gains_over_prompt.png"
+  ],
+  "headline": {
+    "office31_satpa": 84.02527141943304,
+    "office31_prompt": 82.48051502330176,
+    "officehome_satpa": 80.8966574817389,
+    "officehome_prompt": 80.07529517742336
+  }
+}

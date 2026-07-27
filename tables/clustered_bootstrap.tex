@@ -1,0 +1,12 @@
+\begin{tabular}{lllrrrrrrrr}
+\toprule
+benchmark & reference & comparator & mean\_delta\_pp & conditional\_ci\_low & conditional\_ci\_high & conditional\_p\_le\_zero & cluster\_ci\_low & cluster\_ci\_high & cluster\_p\_le\_zero & target\_domain\_clusters \\
+\midrule
+office31 & satpa & prompt\_ensemble & 1.545 & 0.950 & 2.169 & 0.000 & 0.734 & 2.442 & 0.000 & 3 \\
+office31 & satpa & no\_source\_anchor & 1.037 & 0.494 & 1.596 & 0.000 & 0.085 & 1.950 & 0.011 & 3 \\
+office31 & satpa & t3a & -0.586 & -1.755 & 0.602 & 0.839 & -3.531 & 1.929 & 0.631 & 3 \\
+officehome & satpa & prompt\_ensemble & 0.821 & 0.577 & 1.063 & 0.000 & 0.509 & 1.124 & 0.000 & 4 \\
+officehome & satpa & no\_source\_anchor & 0.423 & 0.211 & 0.636 & 0.000 & 0.126 & 0.726 & 0.003 & 4 \\
+officehome & satpa & t3a & 6.715 & 6.133 & 7.308 & 0.000 & 3.223 & 9.333 & 0.000 & 4 \\
+\bottomrule
+\end{tabular}
