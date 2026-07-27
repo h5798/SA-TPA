@@ -67,7 +67,7 @@ def download_officehome_fallback():
     if not extracted.exists():
         print("Office-Home mount missing; downloading public Kaggle dataset fallback")
         urllib.request.urlretrieve(
-            "https://www.kaggle.com/api/v1/datasets/download/karntiwari/home-office-dataset",
+            "https://www.kaggle.com/api/v1/datasets/download/ziyankhanpathan/officehomedataset",
             archive,
         )
         extracted.mkdir(parents=True, exist_ok=True)

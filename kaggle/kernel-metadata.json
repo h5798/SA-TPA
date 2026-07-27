@@ -9,7 +9,7 @@
   "enable_internet": true,
   "dataset_sources": [
     "xixuhu/office31",
-    "karntiwari/home-office-dataset"
+    "ziyankhanpathan/officehomedataset"
   ],
   "competition_sources": [],
   "kernel_sources": []
