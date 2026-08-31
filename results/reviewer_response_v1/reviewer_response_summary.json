@@ -1,0 +1,472 @@
+{
+  "fusion": {
+    "class_adaptive": {
+      "office31": 69.8185,
+      "officehome": 72.0413
+    },
+    "fixed_asymmetric": {
+      "office31": 84.0253,
+      "officehome": 80.8967
+    },
+    "label_free_entropy_selected": {
+      "office31": 86.5217,
+      "officehome": 80.4793
+    },
+    "uncertainty_scaled_target": {
+      "office31": 83.1976,
+      "officehome": 80.3433
+    },
+    "uniform": {
+      "office31": 86.3028,
+      "officehome": 79.7646
+    }
+  },
+  "thresholds": [
+    {
+      "benchmark": "office31",
+      "threshold": 0.5,
+      "selection_coverage": 0.9131,
+      "selected_pseudo_label_accuracy": 88.0846,
+      "accuracy": 84.0194
+    },
+    {
+      "benchmark": "office31",
+      "threshold": 0.6,
+      "selection_coverage": 0.8552,
+      "selected_pseudo_label_accuracy": 90.5368,
+      "accuracy": 83.9859
+    },
+    {
+      "benchmark": "office31",
+      "threshold": 0.7,
+      "selection_coverage": 0.8004,
+      "selected_pseudo_label_accuracy": 92.3004,
+      "accuracy": 84.0253
+    },
+    {
+      "benchmark": "office31",
+      "threshold": 0.8,
+      "selection_coverage": 0.7357,
+      "selected_pseudo_label_accuracy": 94.4401,
+      "accuracy": 83.9925
+    },
+    {
+      "benchmark": "office31",
+      "threshold": 0.9,
+      "selection_coverage": 0.629,
+      "selected_pseudo_label_accuracy": 96.486,
+      "accuracy": 82.1903
+    },
+    {
+      "benchmark": "officehome",
+      "threshold": 0.5,
+      "selection_coverage": 0.8414,
+      "selected_pseudo_label_accuracy": 89.1468,
+      "accuracy": 80.9026
+    },
+    {
+      "benchmark": "officehome",
+      "threshold": 0.6,
+      "selection_coverage": 0.7812,
+      "selected_pseudo_label_accuracy": 91.8073,
+      "accuracy": 80.8925
+    },
+    {
+      "benchmark": "officehome",
+      "threshold": 0.7,
+      "selection_coverage": 0.7227,
+      "selected_pseudo_label_accuracy": 94.0807,
+      "accuracy": 80.8967
+    },
+    {
+      "benchmark": "officehome",
+      "threshold": 0.8,
+      "selection_coverage": 0.6564,
+      "selected_pseudo_label_accuracy": 95.9114,
+      "accuracy": 80.8493
+    },
+    {
+      "benchmark": "officehome",
+      "threshold": 0.9,
+      "selection_coverage": 0.5596,
+      "selected_pseudo_label_accuracy": 97.7438,
+      "accuracy": 80.6608
+    }
+  ],
+  "selection_strategies": [
+    {
+      "benchmark": "office31",
+      "strategy": "class_balanced_entropy",
+      "selection_coverage": 0.7262,
+      "selected_pseudo_label_accuracy": 92.8229,
+      "accuracy": 84.0232
+    },
+    {
+      "benchmark": "office31",
+      "strategy": "confidence_threshold",
+      "selection_coverage": 0.8004,
+      "selected_pseudo_label_accuracy": 92.3004,
+      "accuracy": 83.959
+    },
+    {
+      "benchmark": "office31",
+      "strategy": "entropy_matched_coverage",
+      "selection_coverage": 0.8004,
+      "selected_pseudo_label_accuracy": 91.8956,
+      "accuracy": 83.944
+    },
+    {
+      "benchmark": "office31",
+      "strategy": "reliability_weighted",
+      "selection_coverage": 0.8004,
+      "selected_pseudo_label_accuracy": 92.3004,
+      "accuracy": 84.0253
+    },
+    {
+      "benchmark": "officehome",
+      "strategy": "class_balanced_entropy",
+      "selection_coverage": 0.6676,
+      "selected_pseudo_label_accuracy": 88.6114,
+      "accuracy": 80.9892
+    },
+    {
+      "benchmark": "officehome",
+      "strategy": "confidence_threshold",
+      "selection_coverage": 0.7227,
+      "selected_pseudo_label_accuracy": 94.0807,
+      "accuracy": 80.9058
+    },
+    {
+      "benchmark": "officehome",
+      "strategy": "entropy_matched_coverage",
+      "selection_coverage": 0.7227,
+      "selected_pseudo_label_accuracy": 93.2746,
+      "accuracy": 80.8662
+    },
+    {
+      "benchmark": "officehome",
+      "strategy": "reliability_weighted",
+      "selection_coverage": 0.7227,
+      "selected_pseudo_label_accuracy": 94.0807,
+      "accuracy": 80.8967
+    }
+  ],
+  "noise": [
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.0,
+      "accuracy": 84.0253,
+      "mean_cosine_to_oracle_target_prototype": 0.9777
+    },
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.1,
+      "accuracy": 83.9328,
+      "mean_cosine_to_oracle_target_prototype": 0.9837
+    },
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.2,
+      "accuracy": 83.9025,
+      "mean_cosine_to_oracle_target_prototype": 0.9824
+    },
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.3,
+      "accuracy": 83.7853,
+      "mean_cosine_to_oracle_target_prototype": 0.9779
+    },
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.4,
+      "accuracy": 83.7085,
+      "mean_cosine_to_oracle_target_prototype": 0.9712
+    },
+    {
+      "benchmark": "office31",
+      "method": "source_anchored",
+      "noise_rate": 0.5,
+      "accuracy": 83.6491,
+      "mean_cosine_to_oracle_target_prototype": 0.9615
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.0,
+      "accuracy": 83.0345,
+      "mean_cosine_to_oracle_target_prototype": 0.9759
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.1,
+      "accuracy": 82.9802,
+      "mean_cosine_to_oracle_target_prototype": 0.9833
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.2,
+      "accuracy": 82.9329,
+      "mean_cosine_to_oracle_target_prototype": 0.9824
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.3,
+      "accuracy": 82.8964,
+      "mean_cosine_to_oracle_target_prototype": 0.9779
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.4,
+      "accuracy": 82.8719,
+      "mean_cosine_to_oracle_target_prototype": 0.9712
+    },
+    {
+      "benchmark": "office31",
+      "method": "without_source_fusion",
+      "noise_rate": 0.5,
+      "accuracy": 82.7556,
+      "mean_cosine_to_oracle_target_prototype": 0.9615
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.0,
+      "accuracy": 80.8967,
+      "mean_cosine_to_oracle_target_prototype": 0.9795
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.1,
+      "accuracy": 80.8995,
+      "mean_cosine_to_oracle_target_prototype": 0.984
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.2,
+      "accuracy": 80.8903,
+      "mean_cosine_to_oracle_target_prototype": 0.9821
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.3,
+      "accuracy": 80.8691,
+      "mean_cosine_to_oracle_target_prototype": 0.9776
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.4,
+      "accuracy": 80.8351,
+      "mean_cosine_to_oracle_target_prototype": 0.9711
+    },
+    {
+      "benchmark": "officehome",
+      "method": "source_anchored",
+      "noise_rate": 0.5,
+      "accuracy": 80.8053,
+      "mean_cosine_to_oracle_target_prototype": 0.9629
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.0,
+      "accuracy": 80.5185,
+      "mean_cosine_to_oracle_target_prototype": 0.9788
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.1,
+      "accuracy": 80.5132,
+      "mean_cosine_to_oracle_target_prototype": 0.9839
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.2,
+      "accuracy": 80.4355,
+      "mean_cosine_to_oracle_target_prototype": 0.9821
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.3,
+      "accuracy": 80.4273,
+      "mean_cosine_to_oracle_target_prototype": 0.9776
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.4,
+      "accuracy": 80.3843,
+      "mean_cosine_to_oracle_target_prototype": 0.9711
+    },
+    {
+      "benchmark": "officehome",
+      "method": "without_source_fusion",
+      "noise_rate": 0.5,
+      "accuracy": 80.3198,
+      "mean_cosine_to_oracle_target_prototype": 0.9629
+    }
+  ],
+  "prior_perturbation": [
+    {
+      "benchmark": "office31",
+      "perturbation": 0.0,
+      "prior_l1_error_to_oracle": 0.2159,
+      "accuracy": 84.0253
+    },
+    {
+      "benchmark": "office31",
+      "perturbation": 0.25,
+      "prior_l1_error_to_oracle": 0.2081,
+      "accuracy": 84.0253
+    },
+    {
+      "benchmark": "office31",
+      "perturbation": 0.5,
+      "prior_l1_error_to_oracle": 0.239,
+      "accuracy": 83.9918
+    },
+    {
+      "benchmark": "office31",
+      "perturbation": 0.75,
+      "prior_l1_error_to_oracle": 0.2994,
+      "accuracy": 83.9918
+    },
+    {
+      "benchmark": "office31",
+      "perturbation": 1.0,
+      "prior_l1_error_to_oracle": 0.3875,
+      "accuracy": 83.9918
+    },
+    {
+      "benchmark": "officehome",
+      "perturbation": 0.0,
+      "prior_l1_error_to_oracle": 0.184,
+      "accuracy": 80.8967
+    },
+    {
+      "benchmark": "officehome",
+      "perturbation": 0.25,
+      "prior_l1_error_to_oracle": 0.188,
+      "accuracy": 80.8898
+    },
+    {
+      "benchmark": "officehome",
+      "perturbation": 0.5,
+      "prior_l1_error_to_oracle": 0.241,
+      "accuracy": 80.8898
+    },
+    {
+      "benchmark": "officehome",
+      "perturbation": 0.75,
+      "prior_l1_error_to_oracle": 0.3204,
+      "accuracy": 80.8917
+    },
+    {
+      "benchmark": "officehome",
+      "perturbation": 1.0,
+      "prior_l1_error_to_oracle": 0.4155,
+      "accuracy": 80.8826
+    }
+  ],
+  "class_imbalance": [
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 1,
+      "method": "estimated_prior_correction",
+      "accuracy": 83.1461,
+      "balanced_accuracy": 83.1461
+    },
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 1,
+      "method": "no_prior_correction",
+      "accuracy": 83.0819,
+      "balanced_accuracy": 83.0819
+    },
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 10,
+      "method": "estimated_prior_correction",
+      "accuracy": 83.3849,
+      "balanced_accuracy": 80.4026
+    },
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 10,
+      "method": "no_prior_correction",
+      "accuracy": 83.5765,
+      "balanced_accuracy": 80.4886
+    },
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 50,
+      "method": "estimated_prior_correction",
+      "accuracy": 82.4016,
+      "balanced_accuracy": 80.6364
+    },
+    {
+      "benchmark": "office31",
+      "imbalance_factor": 50,
+      "method": "no_prior_correction",
+      "accuracy": 82.3192,
+      "balanced_accuracy": 80.4572
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 1,
+      "method": "estimated_prior_correction",
+      "accuracy": 79.0112,
+      "balanced_accuracy": 79.0112
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 1,
+      "method": "no_prior_correction",
+      "accuracy": 78.9799,
+      "balanced_accuracy": 78.9799
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 10,
+      "method": "estimated_prior_correction",
+      "accuracy": 78.487,
+      "balanced_accuracy": 78.0116
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 10,
+      "method": "no_prior_correction",
+      "accuracy": 78.4495,
+      "balanced_accuracy": 77.902
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 50,
+      "method": "estimated_prior_correction",
+      "accuracy": 78.9452,
+      "balanced_accuracy": 77.1453
+    },
+    {
+      "benchmark": "officehome",
+      "imbalance_factor": 50,
+      "method": "no_prior_correction",
+      "accuracy": 78.8814,
+      "balanced_accuracy": 76.9607
+    }
+  ]
+}

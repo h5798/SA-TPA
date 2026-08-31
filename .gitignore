@@ -20,3 +20,7 @@ access_token
 outputs/final_assets/previews/
 outputs/final_assets/*.inspect.ndjson
 outputs/final_assets/summary_inspection.ndjson
+
+# Curated, lightweight result tables are versioned for reproducibility.
+!tables/*.csv
+!results/**/*.csv

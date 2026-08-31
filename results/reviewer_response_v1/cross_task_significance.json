@@ -1,0 +1,60 @@
+{
+  "office31": {
+    "prompt_ensemble": {
+      "tasks": 6,
+      "mean_gain_pp": 1.5447563802202542,
+      "positive_tasks": 6,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 0.03125,
+      "sign_test_two_sided_p": 0.03125,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    },
+    "t3a": {
+      "tasks": 6,
+      "mean_gain_pp": -0.5863822530955076,
+      "positive_tasks": 4,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 1.0,
+      "sign_test_two_sided_p": 0.6875,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    },
+    "tip_adapter_source": {
+      "tasks": 6,
+      "mean_gain_pp": 5.857391593356927,
+      "positive_tasks": 6,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 0.03125,
+      "sign_test_two_sided_p": 0.03125,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    }
+  },
+  "officehome": {
+    "prompt_ensemble": {
+      "tasks": 12,
+      "mean_gain_pp": 0.8213623097011199,
+      "positive_tasks": 12,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 0.00048828125,
+      "sign_test_two_sided_p": 0.00048828125,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    },
+    "t3a": {
+      "tasks": 12,
+      "mean_gain_pp": 6.7154353484511375,
+      "positive_tasks": 12,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 0.00048828125,
+      "sign_test_two_sided_p": 0.00048828125,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    },
+    "tip_adapter_source": {
+      "tasks": 12,
+      "mean_gain_pp": 15.878855995833874,
+      "positive_tasks": 12,
+      "zero_tasks": 0,
+      "wilcoxon_signed_rank_two_sided_p": 0.00048828125,
+      "sign_test_two_sided_p": 0.00048828125,
+      "warning": "Task-level tests are secondary because transfer tasks sharing a target domain are correlated."
+    }
+  }
+}
